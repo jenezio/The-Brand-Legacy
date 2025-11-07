@@ -273,10 +273,13 @@ position = Vector2(185, -397)
 scale = Vector2(1.01562, 1.28125)
 sprite_frames = SubResource("SpriteFrames_0h7mo")
 animation = &"jump"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(187, -385)
 shape = SubResource("CapsuleShape2D_4d7sh")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-position = Vector2(549, -540)
+position = Vector2(384, -504)
+zoom = Vector2(1.85, 1.85)
