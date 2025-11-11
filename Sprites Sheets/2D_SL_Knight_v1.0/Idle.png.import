@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://de178eahc0cwk"
-path="res://.godot/imported/Idle.png-81f34f1fc0cc89c044c9484e2e3e62d0.ctex"
+path="res://.godot/imported/Idle.png-3bd563848416f75237c42a52e2f106f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Idle.png"
-dest_files=["res://.godot/imported/Idle.png-81f34f1fc0cc89c044c9484e2e3e62d0.ctex"]
+source_file="res://Sprites Sheets/2D_SL_Knight_v1.0/Idle.png"
+dest_files=["res://.godot/imported/Idle.png-3bd563848416f75237c42a52e2f106f3.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d4krtp4r0w2cl"
-path="res://.godot/imported/Roll.png-24a617e8713d81cd81c5abd66b2ea997.ctex"
+path="res://.godot/imported/Roll.png-3613360f5d918fa9e26945b0602a9eb8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Roll.png"
-dest_files=["res://.godot/imported/Roll.png-24a617e8713d81cd81c5abd66b2ea997.ctex"]
+source_file="res://Sprites Sheets/2D_SL_Knight_v1.0/Roll.png"
+dest_files=["res://.godot/imported/Roll.png-3613360f5d918fa9e26945b0602a9eb8.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cayw1p8foavag"
-path="res://.godot/imported/Run.png-f755afc096d9bdec47c2a9cce1c9be72.ctex"
+path="res://.godot/imported/Run.png-0f27af78765cbc8b4da487ff13d3727e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Run.png"
-dest_files=["res://.godot/imported/Run.png-f755afc096d9bdec47c2a9cce1c9be72.ctex"]
+source_file="res://Sprites Sheets/2D_SL_Knight_v1.0/Run.png"
+dest_files=["res://.godot/imported/Run.png-0f27af78765cbc8b4da487ff13d3727e.ctex"]
 
 [params]
 

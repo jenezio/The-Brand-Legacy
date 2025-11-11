@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pq27j5qa0sab"
-path="res://.godot/imported/Slide.png-bcff6adae1adaf121faff1328dcb6cab.ctex"
+path="res://.godot/imported/Slide.png-942df156a2ac3dbe6a9f41a2e427771a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Slide.png"
-dest_files=["res://.godot/imported/Slide.png-bcff6adae1adaf121faff1328dcb6cab.ctex"]
+source_file="res://Sprites Sheets/2D_SL_Knight_v1.0/Slide.png"
+dest_files=["res://.godot/imported/Slide.png-942df156a2ac3dbe6a9f41a2e427771a.ctex"]
 
 [params]
 

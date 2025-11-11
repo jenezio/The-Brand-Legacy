@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dnv2stdn1v2pa"
-path="res://.godot/imported/Hurt.png-0976e45b097a1a4dff5d0bdccee2cddd.ctex"
+path="res://.godot/imported/Hurt.png-801c04a286a833980878eec1ea6f041f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Hurt.png"
-dest_files=["res://.godot/imported/Hurt.png-0976e45b097a1a4dff5d0bdccee2cddd.ctex"]
+source_file="res://Sprites Sheets/2D_SL_Knight_v1.0/Hurt.png"
+dest_files=["res://.godot/imported/Hurt.png-801c04a286a833980878eec1ea6f041f.ctex"]
 
 [params]
 

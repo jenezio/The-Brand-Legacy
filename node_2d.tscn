@@ -1,14 +1,55 @@
-[gd_scene load_steps=34 format=3 uid="uid://8q77lcu0qjuk"]
+[gd_scene load_steps=45 format=3 uid="uid://bnirhepirr3rd"]
 
 [ext_resource type="Texture2D" uid="uid://iqg177a0poha" path="res://TilesetDoChao-removebg-preview2.png" id="1_0hol4"]
 [ext_resource type="Texture2D" uid="uid://dl1sqfthevcl6" path="res://CamadaDeFundo.png" id="2_q6r6c"]
 [ext_resource type="Script" uid="uid://u6mm1boc7wl4" path="res://character_body_2d.gd" id="3_kdubu"]
-[ext_resource type="Texture2D" uid="uid://de178eahc0cwk" path="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Idle.png" id="4_0hol4"]
-[ext_resource type="Texture2D" uid="uid://bsav4v2vfm3ml" path="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Jump.png" id="5_kdubu"]
-[ext_resource type="Texture2D" uid="uid://cayw1p8foavag" path="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Run.png" id="6_d21ai"]
+[ext_resource type="Texture2D" uid="uid://de178eahc0cwk" path="res://Sprites Sheets/2D_SL_Knight_v1.0/Idle.png" id="4_0hol4"]
+[ext_resource type="Texture2D" uid="uid://bptbph47kmo3f" path="res://Sprites Sheets/2D_SL_Knight_v1.0/Attacks_shorted2.PNG" id="4_d21ai"]
+[ext_resource type="Texture2D" uid="uid://bsav4v2vfm3ml" path="res://Sprites Sheets/2D_SL_Knight_v1.0/Jump.png" id="5_kdubu"]
+[ext_resource type="Texture2D" uid="uid://cayw1p8foavag" path="res://Sprites Sheets/2D_SL_Knight_v1.0/Run.png" id="6_d21ai"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rj586"]
 size = Vector2(2522.5, 90.4999)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebxd8"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u7jv"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24dk6"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(256, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mryly"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(384, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kq1c5"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(512, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ornx7"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(640, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnnru"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(768, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_540hr"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(896, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ip5v"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(0, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5dlx"]
+atlas = ExtResource("4_d21ai")
+region = Rect2(128, 64, 128, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
 atlas = ExtResource("4_0hol4")
@@ -110,6 +151,67 @@ region = Rect2(128, 192, 128, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ebxd8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u7jv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24dk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mryly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kq1c5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ornx7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnnru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_540hr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ip5v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5dlx")
+}],
+"loop": false,
+"name": &"attack_model1",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebxd8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u7jv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24dk6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mryly")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kq1c5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ornx7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnnru")
+}],
+"loop": false,
+"name": &"attack_model2",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_q6r6c")
 }, {
 "duration": 1.0,
@@ -135,7 +237,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -164,7 +266,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"jump",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -193,12 +295,12 @@ animations = [{
 }],
 "loop": true,
 "name": &"run",
-"speed": 5.0
+"speed": 8.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4d7sh"]
-radius = 23.0
-height = 72.0
+radius = 16.0
+height = 76.0
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(73, 886)
@@ -261,25 +363,27 @@ texture = ExtResource("1_0hol4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(547.5, -489.125)
-scale = Vector2(0.799592, 0.672941)
+position = Vector2(403, -470)
+scale = Vector2(0.6, 0.498)
 texture = ExtResource("2_q6r6c")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("3_kdubu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-position = Vector2(185, -397)
+position = Vector2(89, -385)
 scale = Vector2(1.01562, 1.28125)
 sprite_frames = SubResource("SpriteFrames_0h7mo")
-animation = &"jump"
-frame = 7
+animation = &"attack_model1"
+frame = 9
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(187, -385)
+position = Vector2(90, -373)
 shape = SubResource("CapsuleShape2D_4d7sh")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-position = Vector2(384, -504)
+position = Vector2(281, -471)
 zoom = Vector2(1.85, 1.85)
+
+[connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="CharacterBody2D" method="_on_animated_sprite_2d_animation_finished"]

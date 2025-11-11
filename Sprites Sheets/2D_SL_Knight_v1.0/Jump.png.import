@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bsav4v2vfm3ml"
-path="res://.godot/imported/Jump.png-f68acd0be967d4c42363d5cb96c67c32.ctex"
+path="res://.godot/imported/Jump.png-70b041a3426b5527329c59d862485a24.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Jump.png"
-dest_files=["res://.godot/imported/Jump.png-f68acd0be967d4c42363d5cb96c67c32.ctex"]
+source_file="res://Sprites Sheets/2D_SL_Knight_v1.0/Jump.png"
+dest_files=["res://.godot/imported/Jump.png-70b041a3426b5527329c59d862485a24.ctex"]
 
 [params]
 

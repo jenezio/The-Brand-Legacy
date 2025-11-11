@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxqd32gnu6w0x"
-path="res://.godot/imported/Climb.png-93101e42a8ce9bb3e14b1b1391d9be15.ctex"
+path="res://.godot/imported/Climb.png-d881c211a927f5ba1504ced4680d54fb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://The-Brand-Legacy/2D_SL_Knight_v1.0/Climb.png"
-dest_files=["res://.godot/imported/Climb.png-93101e42a8ce9bb3e14b1b1391d9be15.ctex"]
+source_file="res://Sprites Sheets/2D_SL_Knight_v1.0/Climb.png"
+dest_files=["res://.godot/imported/Climb.png-d881c211a927f5ba1504ced4680d54fb.ctex"]
 
 [params]
 
