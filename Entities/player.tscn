@@ -19,6 +19,10 @@ script/source = "extends CharacterBody2D
 @export var gravity := 900.0
 @export var max_vidas := 3
 
+@onready var jump_sfx: AudioStreamPlayer = $jump
+@onready var walk_sfx: AudioStreamPlayer2D = $walk   # 🔊 SOM DE PASSOS
+@onready var sword_sfx: AudioStreamPlayer = $sword
+
 # -----------------
 # VARIÁVEIS DE ESTADO
 # -----------------
@@ -34,7 +38,6 @@ func _ready():
 	vidas = max_vidas
 	attack_area.monitoring = false
 	
-	# Garante a conexão da animação via código
 	if not anim.animation_finished.is_connected(_on_animated_sprite_2d_animation_finished):
 		anim.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
 
@@ -44,8 +47,7 @@ func _physics_process(delta):
 		move_and_slide()
 		return 
 	
-	# === A LÓGICA DE SEGURANÇA FOI MOVIDA PARA CÁ (Linhas 40-43 anteriores) ===
-	# --- Lógica de Segurança (Resetar ataque se a animação falhar) ---
+	# --- Segurança do ataque ---
 	if is_attacking and anim.animation != \"attack_model1\":
 		is_attacking = false
 		attack_area.monitoring = false
@@ -58,12 +60,14 @@ func _physics_process(delta):
 		velocity.x = 0
 		attack_area.monitoring = true
 		anim.play(\"attack_model1\")
+		sword_sfx.play()
 
 	# --- MOVIMENTO (desativado durante ataque) ---
 	if not is_attacking:
 		# Pulo
 		if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
 			velocity.y = jump_force
+			jump_sfx.play()
 
 		# Andar
 		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
@@ -71,13 +75,20 @@ func _physics_process(delta):
 		if direction:
 			velocity.x = direction * speed
 			anim.scale.x = direction
+
+			# 🔊 SOM DE PASSOS
+			if is_on_floor():
+				if not walk_sfx.playing:
+					walk_sfx.play()
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed)
+			walk_sfx.stop()   # 🛑 PARA O SOM SE PARAR DE ANDAR
 
 		# ANIMAÇÕES
 		if not is_on_floor():
 			if anim.animation != \"jump\":
 				anim.play(\"jump\")
+			walk_sfx.stop()  # 🛑 PARA O SOM SE ESTIVER NO AR
 		else:
 			if direction:
 				if anim.animation != \"walk\":
@@ -95,18 +106,15 @@ func _physics_process(delta):
 # -----------------
 # FUNÇÕES DE ESTADO
 # -----------------
-# Reseta o estado de ataque
 func _on_animated_sprite_2d_animation_finished():
 	if anim.animation == \"attack_model1\":
 		is_attacking = false
 		attack_area.monitoring = false
 		has_damaged = false
 	
-	# Morte do Player
 	if anim.animation == \"death\":
 		queue_free()
 
-# Jogador toma dano
 func take_damage(amount: int):
 	if is_dead:
 		return
@@ -128,7 +136,6 @@ func take_damage(amount: int):
 # -----------------
 # FUNÇÕES DE COLISÃO
 # -----------------
-# Dano no Inimigo (Conectado ao sinal 'body_entered' do Area2D_Ataque)
 func _on_area_2d_ataque_body_entered(body: Node2D): 
 	if is_attacking and not has_damaged:
 		if body.is_in_group(\"Enemy\"):
@@ -374,7 +381,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 10.0
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_taegk"]
@@ -395,9 +402,8 @@ shape = SubResource("CapsuleShape2D_ypkcv")
 position = Vector2(12, -10)
 scale = Vector2(0.87843156, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
-animation = &"idle"
+animation = &"walk"
 autoplay = "idle"
-frame_progress = 0.47799292
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
 limit_left = 1
