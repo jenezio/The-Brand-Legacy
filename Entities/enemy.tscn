@@ -1,7 +1,7 @@
-[gd_scene load_steps=75 format=3 uid="uid://bjwmgqfnho6tn"]
+[gd_scene load_steps=75 format=3 uid="uid://csulo4o3vqxap"]
 
 [ext_resource type="Texture2D" uid="uid://beqrinjxsve02" path="res://Sprites/Skeleton Attack.png" id="1_b15b6"]
-[ext_resource type="Script" uid="uid://ccn0net7aotuu" path="res://Scripts/Enemy.gd" id="1_dhb5u"]
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_dhb5u"]
 [ext_resource type="Texture2D" uid="uid://bd82t68u6dsql" path="res://Sprites/Skeleton Dead.png" id="2_dhb5u"]
 [ext_resource type="Texture2D" uid="uid://18k7ssaajd1n" path="res://Sprites/Skeleton Hit.png" id="3_cyfus"]
 [ext_resource type="Texture2D" uid="uid://bjtn2sg5wh6rs" path="res://Sprites/Skeleton Idle.png" id="4_adlvn"]
@@ -319,7 +319,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Skeleton Attack",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -367,9 +367,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_drtjh")
 }],
-"loop": true,
+"loop": false,
 "name": &"Skeleton Dead",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -398,7 +398,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Skeleton Hit",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -436,7 +436,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Skeleton idle",
-"speed": 3.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -480,7 +480,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Skeleton walk",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sagxc"]
@@ -498,10 +498,11 @@ collision_layer = 2
 script = ExtResource("1_dhb5u")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
-position = Vector2(11, -7.999999)
-scale = Vector2(1.2398254, 1.7246622)
+position = Vector2(20.1719, -8)
+scale = Vector2(1.66642, 1.72466)
 sprite_frames = SubResource("SpriteFrames_cfdqp")
 animation = &"Skeleton Attack"
+frame_progress = 0.314815
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Enemy"]]
 position = Vector2(-2, 1)

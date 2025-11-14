@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_mhtsl"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_w51g1"]
 [ext_resource type="Texture2D" uid="uid://djivm1f8ioapx" path="res://Sprites/Free Pixel Art Forest/PNG/Background layers/ChatGPT_Image_12_de_nov._de_2025__11_47_42-removebg-preview.png" id="3_4jv7b"]
-[ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="4_03iqk"]
+[ext_resource type="PackedScene" uid="uid://csulo4o3vqxap" path="res://Entities/enemy.tscn" id="4_03iqk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4jv7b"]
 texture = ExtResource("2_w51g1")

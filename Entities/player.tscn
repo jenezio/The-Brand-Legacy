@@ -393,11 +393,11 @@ shape = SubResource("CapsuleShape2D_ypkcv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
 position = Vector2(12, -10)
-scale = Vector2(0.87843156, 0.9375)
+scale = Vector2(0.878432, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.47799292
+frame_progress = 0.477993
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
 limit_left = 1
