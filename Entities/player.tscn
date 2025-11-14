@@ -1,14 +1,148 @@
-[gd_scene load_steps=38 format=3 uid="uid://duehcpa4cxw7"]
+[gd_scene load_steps=39 format=3 uid="uid://ditjcd3xtjpu8"]
 
-[ext_resource type="Script" uid="uid://6rcltkjqbiuu" path="res://Scripts/player.gd" id="1_tcnsb"]
 [ext_resource type="Texture2D" uid="uid://dtsai5184qohq" path="res://Sprites/Idle.png" id="2_gb1tc"]
 [ext_resource type="Texture2D" uid="uid://1s20avgesdoq" path="res://Sprites/Attacks_shorted2.PNG" id="2_kee72"]
 [ext_resource type="Texture2D" uid="uid://b4035ge8e0lm0" path="res://Sprites/Jump.png" id="3_taegk"]
 [ext_resource type="Texture2D" uid="uid://dljlymves2eej" path="res://Sprites/Run.png" id="3_xd3k7"]
 
+[sub_resource type="GDScript" id="GDScript_taegk"]
+script/source = "extends CharacterBody2D
+
+# -----------------
+# @ONREADY E EXPORTS
+# -----------------
+@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var attack_area: Area2D = $Area2D_Ataque
+
+@export var speed := 120.0
+@export var jump_force := -300.0
+@export var gravity := 900.0
+@export var max_vidas := 3
+
+# -----------------
+# VARIÁVEIS DE ESTADO
+# -----------------
+var is_attacking := false
+var has_damaged := false
+var vidas := 3
+var is_dead := false 
+
+# -----------------
+# FUNÇÕES NATIVAS
+# -----------------
+func _ready():
+	vidas = max_vidas
+	attack_area.monitoring = false
+	
+	# Garante a conexão da animação via código
+	if not anim.animation_finished.is_connected(_on_animated_sprite_2d_animation_finished):
+		anim.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
+
+func _physics_process(delta):
+	if is_dead:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return 
+	
+	# === A LÓGICA DE SEGURANÇA FOI MOVIDA PARA CÁ (Linhas 40-43 anteriores) ===
+	# --- Lógica de Segurança (Resetar ataque se a animação falhar) ---
+	if is_attacking and anim.animation != \"attack_model1\":
+		is_attacking = false
+		attack_area.monitoring = false
+		has_damaged = false
+		
+	# --- ATAQUE ---
+	if Input.is_action_just_pressed(\"ataque\") and is_on_floor() and not is_attacking:
+		is_attacking = true
+		has_damaged = false
+		velocity.x = 0
+		attack_area.monitoring = true
+		anim.play(\"attack_model1\")
+
+	# --- MOVIMENTO (desativado durante ataque) ---
+	if not is_attacking:
+		# Pulo
+		if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+			velocity.y = jump_force
+
+		# Andar
+		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+
+		if direction:
+			velocity.x = direction * speed
+			anim.scale.x = direction
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed)
+
+		# ANIMAÇÕES
+		if not is_on_floor():
+			if anim.animation != \"jump\":
+				anim.play(\"jump\")
+		else:
+			if direction:
+				if anim.animation != \"walk\":
+					anim.play(\"walk\")
+			else:
+				if anim.animation != \"idle\":
+					anim.play(\"idle\")
+
+	# Gravidade
+	if not is_on_floor():
+		velocity.y += gravity * delta
+		
+	move_and_slide()
+
+# -----------------
+# FUNÇÕES DE ESTADO
+# -----------------
+# Reseta o estado de ataque
+func _on_animated_sprite_2d_animation_finished():
+	if anim.animation == \"attack_model1\":
+		is_attacking = false
+		attack_area.monitoring = false
+		has_damaged = false
+	
+	# Morte do Player
+	if anim.animation == \"death\":
+		queue_free()
+
+# Jogador toma dano
+func take_damage(amount: int):
+	if is_dead:
+		return
+
+	vidas -= amount
+	print(\"Vidas restantes (Player): \", vidas)
+	
+	if vidas <= 0:
+		is_dead = true
+		velocity = Vector2.ZERO
+		
+		print(\"Player morreu\")
+		
+		if anim.has_animation(\"death\"):
+			anim.play(\"death\")
+		else:
+			queue_free()
+
+# -----------------
+# FUNÇÕES DE COLISÃO
+# -----------------
+# Dano no Inimigo (Conectado ao sinal 'body_entered' do Area2D_Ataque)
+func _on_area_2d_ataque_body_entered(body: Node2D): 
+	if is_attacking and not has_damaged:
+		if body.is_in_group(\"Enemy\"):
+			var enemy = body as CharacterBody2D 
+			if enemy != null and enemy.has_method(\"take_damage\"):
+				
+				if !enemy.is_hitting and !enemy.is_dead: 
+					enemy.take_damage(1)
+					has_damaged = true
+"
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ypkcv"]
-radius = 14.0
-height = 48.0
+radius = 13.0
+height = 46.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x5h13"]
 atlas = ExtResource("2_kee72")
@@ -243,25 +377,43 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Player" type="CharacterBody2D"]
-position = Vector2(69, 81)
-script = ExtResource("1_tcnsb")
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_taegk"]
+radius = 8.0
+height = 42.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+position = Vector2(69, 81)
+collision_layer = 8
+collision_mask = 3
+script = SubResource("GDScript_taegk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Player"]]
 position = Vector2(10, -2)
 shape = SubResource("CapsuleShape2D_ypkcv")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(9, -10)
-scale = Vector2(0.953125, 1)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
+position = Vector2(12, -10)
+scale = Vector2(0.87843156, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
-animation = &"attack_model1"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.47799292
 
-[node name="Camera2D" type="Camera2D" parent="."]
-limit_left = 0
-limit_top = 0
-limit_bottom = 200
+[node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
+limit_left = 1
+limit_top = 12
+limit_right = 10000001
+limit_bottom = 212
 position_smoothing_enabled = true
 
+[node name="Area2D_Ataque" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Ataque" groups=["Player"]]
+position = Vector2(21, -2)
+shape = SubResource("CapsuleShape2D_taegk")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="Area2D_Ataque" to="." method="_on_area_2d_ataque_body_entered"]

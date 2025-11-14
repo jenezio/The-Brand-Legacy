@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://eod6kcic760f"]
+[gd_scene load_steps=9 format=4 uid="uid://eod6kcic760f"]
 
-[ext_resource type="PackedScene" uid="uid://duehcpa4cxw7" path="res://Entities/player.tscn" id="1_mhtsl"]
+[ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_mhtsl"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_w51g1"]
 [ext_resource type="Texture2D" uid="uid://djivm1f8ioapx" path="res://Sprites/Free Pixel Art Forest/PNG/Background layers/ChatGPT_Image_12_de_nov._de_2025__11_47_42-removebg-preview.png" id="3_4jv7b"]
+[ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="4_03iqk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4jv7b"]
 texture = ExtResource("2_w51g1")
@@ -576,9 +577,11 @@ sources/1 = SubResource("TileSetAtlasSource_03iqk")
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_mhtsl")]
-position = Vector2(63, 113)
+position = Vector2(806, 74)
 
 [node name="Tiles" type="Node2D" parent="."]
+light_mask = 0
+visibility_layer = 4
 
 [node name="Terrain" type="TileMapLayer" parent="Tiles"]
 position = Vector2(-1, -1)
@@ -588,3 +591,6 @@ tile_set = SubResource("TileSet_03iqk")
 [node name="Decoration" type="TileMapLayer" parent="Tiles"]
 tile_map_data = PackedByteArray("AAANAAYAAQALAAIAAAA=")
 tile_set = SubResource("TileSet_ihreq")
+
+[node name="Enemy" parent="." instance=ExtResource("4_03iqk")]
+position = Vector2(592, 95)
