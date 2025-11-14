@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=4 uid="uid://3sw031be328q"]
+[gd_scene load_steps=14 format=4 uid="uid://3sw031be328q"]
 
 [ext_resource type="PackedScene" uid="uid://duehcpa4cxw7" path="res://Entities/player.tscn" id="1_b2hj7"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_o2q3j"]
 [ext_resource type="Texture2D" uid="uid://dyorwe4xkcw1d" path="res://Sprites/eeeee.png" id="3_wxqtn"]
 [ext_resource type="Texture2D" uid="uid://dbmtlmw1lx5p5" path="res://Sprites/background_set/B1010.png" id="4_0ca2o"]
 [ext_resource type="Texture2D" uid="uid://b4lr4ykyyhakf" path="res://Sprites/background_set/C2011.png" id="5_0ca2o"]
+[ext_resource type="Texture2D" uid="uid://dsn0p3i34js61" path="res://Sprites/background_set/estrelas.png" id="5_2dvii"]
 [ext_resource type="Texture2D" uid="uid://d0acmmt5mj2al" path="res://Sprites/background_set/Montanha2.png" id="5_p1i8u"]
 [ext_resource type="Texture2D" uid="uid://b2rnl00affn0t" path="res://Sprites/background_set/chãozinho de fundo mato.png" id="7_2dvii"]
 [ext_resource type="Texture2D" uid="uid://ck4hmdw862eq3" path="res://Sprites/background_set/bgrd_tree2.png" id="8_0ca2o"]
@@ -1178,6 +1179,14 @@ motion_mirroring = Vector2(288, 0)
 texture = ExtResource("4_0ca2o")
 centered = false
 
+[node name="7" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(288, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/7"]
+texture = ExtResource("5_2dvii")
+centered = false
+
 [node name="5" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(0.2, 0.2)
 motion_mirroring = Vector2(288, 0)
@@ -1203,7 +1212,7 @@ motion_scale = Vector2(0.4, 0.4)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/3"]
-position = Vector2(-3, 177)
+position = Vector2(-3, 182)
 texture = ExtResource("7_2dvii")
 centered = false
 
