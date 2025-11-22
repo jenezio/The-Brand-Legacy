@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://csulo4o3vqxap"]
+[gd_scene load_steps=74 format=3 uid="uid://bjwmgqfnho6tn"]
 
 [ext_resource type="Texture2D" uid="uid://beqrinjxsve02" path="res://Sprites/Skeleton Attack.png" id="1_b15b6"]
 [ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_dhb5u"]
@@ -480,11 +480,10 @@ animations = [{
 radius = 9.0
 height = 44.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhb5u"]
-size = Vector2(20, 41)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dhb5u"]
+height = 45.1829
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cyfus"]
-size = Vector2(20, 38)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cyfus"]
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 2
@@ -495,28 +494,33 @@ position = Vector2(5, -5)
 scale = Vector2(1.66642, 1.72466)
 sprite_frames = SubResource("SpriteFrames_cfdqp")
 animation = &"Skeleton walk"
-frame_progress = 0.353801
+frame_progress = 0.441164
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Enemy"]]
+[node name="colisor_padrao" type="CollisionShape2D" parent="." groups=["Enemy"]]
 position = Vector2(-2, 1)
 shape = SubResource("CapsuleShape2D_sagxc")
+debug_color = Color(0.994841, 0, 0.215467, 0.42)
 
 [node name="Area2D_DanoPlayer" type="Area2D" parent="." groups=["Enemy"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_DanoPlayer" groups=["Enemy"]]
+[node name="area_de_dano" type="CollisionShape2D" parent="Area2D_DanoPlayer" groups=["Enemy"]]
 position = Vector2(-1, 2.5)
-shape = SubResource("RectangleShape2D_dhb5u")
+scale = Vector2(1.05215, 0.951687)
+shape = SubResource("CapsuleShape2D_dhb5u")
+debug_color = Color(0.0901961, 0.639216, 0, 0.2)
 
 [node name="Area2D_Visao" type="Area2D" parent="." groups=["Enemy"]]
 position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Visao" groups=["Enemy"]]
 position = Vector2(-1, 1)
-shape = SubResource("RectangleShape2D_cyfus")
+scale = Vector2(1.03814, 1.51041)
+shape = SubResource("CapsuleShape2D_cyfus")
+debug_color = Color(0.14143, 0.519588, 1, 0.42)
 
 [node name="WallCheck" type="RayCast2D" parent="."]
 position = Vector2(0, 1)
-target_position = Vector2(15, 0)
+target_position = Vector2(19, 0)
 collision_mask = 255
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
