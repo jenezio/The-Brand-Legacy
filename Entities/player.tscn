@@ -149,7 +149,7 @@ func _on_area_2d_ataque_body_entered(body: Node2D):
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ypkcv"]
 radius = 13.0
-height = 46.0
+height = 44.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x5h13"]
 atlas = ExtResource("2_kee72")
@@ -385,8 +385,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_taegk"]
-radius = 8.0
-height = 42.0
+radius = 18.0
+height = 44.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 position = Vector2(69, 81)
@@ -397,10 +397,11 @@ script = SubResource("GDScript_taegk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Player"]]
 position = Vector2(10, -2)
 shape = SubResource("CapsuleShape2D_ypkcv")
+debug_color = Color(0.999569, 0, 0.108775, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
 position = Vector2(12, -10)
-scale = Vector2(0.87843156, 0.9375)
+scale = Vector2(0.878432, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
 animation = &"walk"
 autoplay = "idle"
@@ -418,7 +419,7 @@ collision_mask = 2
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Ataque" groups=["Player"]]
-position = Vector2(21, -2)
+position = Vector2(10, -2)
 shape = SubResource("CapsuleShape2D_taegk")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
