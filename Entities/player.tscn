@@ -402,10 +402,10 @@ frame = 9
 frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
-limit_left = 1
-limit_top = 12
-limit_right = 10000001
-limit_bottom = 212
+limit_left = 0
+limit_top = 0
+limit_right = 1600
+limit_bottom = 213
 position_smoothing_enabled = true
 
 [node name="Area2D_Ataque" type="Area2D" parent="."]
