@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="TheBrandLegacy"
-run/main_scene="uid://eod6kcic760f"
 config/features=PackedStringArray("4.4", "Mobile")
 
 [display]
@@ -60,7 +59,7 @@ ataque={
 2d_physics/layer_1="player"
 2d_physics/layer_2="enemies"
 2d_physics/layer_3="terrain"
-2d_physics/layer_4="level_end"
+2d_physics/layer_4="level end"
 
 [rendering]
 

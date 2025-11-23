@@ -1,0 +1,75 @@
+[gd_scene load_steps=11 format=4 uid="uid://cdgof6ajxlmxf"]
+
+[ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_hva3m"]
+[ext_resource type="Texture2D" uid="uid://bgmr6c4o6tr65" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_1.png" id="2_hva3m"]
+[ext_resource type="Texture2D" uid="uid://bprluxm2tvtix" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_3.png" id="3_03aui"]
+[ext_resource type="Texture2D" uid="uid://dn0x1neeihvqr" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_2.png" id="3_7wows"]
+[ext_resource type="Texture2D" uid="uid://cqpax6jycs8to" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_4.png" id="4_xowb1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7wows"]
+texture = ExtResource("2_hva3m")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fo6f4"]
+texture = ExtResource("3_03aui")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_exf7i"]
+texture = ExtResource("4_xowb1")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2q7nn"]
+texture = ExtResource("3_7wows")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, -1.79859, -8, 8, 8, 8, 8, -8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, -1.79859, -8, 8, 8, 8, 8, -8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, -1.79859, -8, 8, 8, 8, 8, -8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, -1.79859, -8, 8, 8, 8, 8, -8)
+
+[sub_resource type="TileSet" id="TileSet_m60jb"]
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 3
+sources/0 = SubResource("TileSetAtlasSource_7wows")
+sources/3 = SubResource("TileSetAtlasSource_fo6f4")
+sources/4 = SubResource("TileSetAtlasSource_exf7i")
+sources/5 = SubResource("TileSetAtlasSource_2q7nn")
+
+[node name="Castle" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_hva3m")]
+position = Vector2(125, 84)
+scale = Vector2(1.02167, 1.14879)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+texture_filter = 1
+position = Vector2(91, 112)
+scale = Vector2(1.02167, 1.14879)
+tile_map_data = PackedByteArray("AAD7/wQAAAAAAAAAAAD7/wUAAAAAAAEAAAD8/wQAAAABAAAAAAD8/wUAAAABAAEAAAACAAQABQABAAAAAAABAAQABQAAAAAAAAACAAUABQABAAEAAAABAAUABQAAAAEAAAAEAAQAAwABAAAAAAADAAQAAwAAAAAAAAAEAAUAAwABAAEAAAADAAUAAwAAAAEAAAAGAAQABQABAAAAAAAFAAQABQAAAAAAAAAGAAUABQABAAEAAAAFAAUABQAAAAEAAAAIAAQAAwABAAAAAAAHAAQAAwAAAAAAAAAIAAUAAwABAAEAAAAHAAUAAwAAAAEAAAAMAAQAAwABAAAAAAAMAAUAAwABAAEAAAANAAQABAAAAAAAAAANAAUABAAAAAEAAAD9/wQABQAAAAAAAAD9/wUABQAAAAEAAAD+/wQABQABAAAAAAD+/wUABQABAAEAAAD//wQAAwAAAAAAAAD//wUAAwAAAAEAAAAAAAQAAwABAAAAAAAAAAUAAwABAAEAAAAJAAQABQAAAAAAAAAJAAUABQAAAAEAAAAKAAQABQABAAAAAAAKAAUABQABAAEAAAALAAQAAwAAAAAAAAALAAUAAwAAAAEAAAAOAAQABAABAAAAAAAOAAUABAABAAEAAAA=")
+tile_set = SubResource("TileSet_m60jb")
+collision_visibility_mode = 1
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
