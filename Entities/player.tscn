@@ -299,7 +299,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_model1",
-"speed": 10.0
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -396,10 +396,8 @@ debug_color = Color(0.999569, 0, 0.108775, 0.42)
 position = Vector2(12, -10)
 scale = Vector2(0.878432, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
-animation = &"attack_model1"
+animation = &"walk"
 autoplay = "idle"
-frame = 9
-frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
 limit_left = 1
