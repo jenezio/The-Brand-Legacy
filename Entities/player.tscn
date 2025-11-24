@@ -405,7 +405,7 @@ frame_progress = 1.0
 limit_left = 0
 limit_top = 0
 limit_right = 1600
-limit_bottom = 213
+limit_bottom = 350
 position_smoothing_enabled = true
 
 [node name="Area2D_Ataque" type="Area2D" parent="."]
