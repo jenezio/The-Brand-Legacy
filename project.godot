@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="TheBrandLegacy"
-config/features=PackedStringArray("4.4", "Mobile")
+run/main_scene="uid://dhv5k13c1hf03"
+config/features=PackedStringArray("4.5", "Mobile")
 
 [display]
 

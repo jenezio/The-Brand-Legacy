@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://due266gpvcejh"]
+
+[ext_resource type="Script" uid="uid://dguwia2hq8yvp" path="res://Scripts/pausa_menu.gd" id="1_y80cm"]
+[ext_resource type="FontFile" uid="uid://b2rh0oops8jvr" path="res://Imagens das Telas de Menu, pausa, morte e etc/Gotfridus.otf" id="2_6dmyc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y80cm"]
+bg_color = Color(0.26293245, 0.26293245, 0.26293242, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.6610811, 0.66108096, 0.66108096, 1)
+
+[sub_resource type="InputEventAction" id="InputEventAction_y80cm"]
+action = &"ui_cancel"
+
+[sub_resource type="Shortcut" id="Shortcut_6dmyc"]
+events = [SubResource("InputEventAction_y80cm")]
+
+[node name="PausaMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_y80cm")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 90.0
+offset_top = 46.0
+offset_right = 199.0
+offset_bottom = 152.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y80cm")
+
+[node name="menu_holder" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 23.0
+offset_right = 94.0
+offset_bottom = 85.0
+rotation = 0.0087417085
+
+[node name="Continuar" type="Button" parent="Panel/menu_holder"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_focus_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_pressed_color = Color(0.5372549, 0.5372549, 0.5372549, 1)
+theme_override_colors/font_hover_color = Color(0.95686275, 0.95686275, 0.95686275, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_6dmyc")
+theme_override_font_sizes/font_size = 8
+shortcut = SubResource("Shortcut_6dmyc")
+text = "Continuar"
+
+[node name="Reiniciar" type="Button" parent="Panel/menu_holder"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_focus_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_pressed_color = Color(0.5372549, 0.5372549, 0.5372549, 1)
+theme_override_colors/font_hover_color = Color(0.95686275, 0.95686275, 0.95686275, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_6dmyc")
+theme_override_font_sizes/font_size = 8
+text = "Reiniciar"
+
+[node name="Sair" type="Button" parent="Panel/menu_holder"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_6dmyc")
+theme_override_font_sizes/font_size = 8
+text = "Sair"
+
+[connection signal="pressed" from="Panel/menu_holder/Continuar" to="." method="_on_continuar_pressed"]
+[connection signal="pressed" from="Panel/menu_holder/Reiniciar" to="." method="_on_reiniciar_pressed"]
+[connection signal="pressed" from="Panel/menu_holder/Sair" to="." method="_on_sair_pressed"]
