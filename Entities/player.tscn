@@ -393,6 +393,7 @@ shape = SubResource("CapsuleShape2D_ypkcv")
 debug_color = Color(0.999569, 0, 0.108775, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
+z_index = 1
 position = Vector2(12, -10)
 scale = Vector2(0.878432, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
@@ -404,7 +405,7 @@ frame_progress = 1.0
 [node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
 limit_left = 0
 limit_top = 0
-limit_right = 1600
+limit_right = 1325
 limit_bottom = 350
 position_smoothing_enabled = true
 
