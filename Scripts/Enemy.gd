@@ -19,7 +19,7 @@ enum State { PATROL, CHASE, ATTACK, HIT, DEAD }
 
 @export_group("Combate")
 @export var attack_damage := 1
-@export var max_health := 3
+@export var max_health := 5
 @export var attack_cooldown_time := 1.8
 
 const GRAVITY := 980.0
