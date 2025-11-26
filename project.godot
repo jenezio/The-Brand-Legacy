@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="TheBrandLegacy"
-run/main_scene="uid://eod6kcic760f"
-config/features=PackedStringArray("4.4", "Mobile")
+run/main_scene="uid://3sw031be328q"
+config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
@@ -21,6 +21,10 @@ window/size/viewport_width=288
 window/size/viewport_height=208
 window/size/mode=2
 window/stretch/mode="canvas_items"
+
+[global_group]
+
+jogador=""
 
 [input]
 
@@ -61,7 +65,7 @@ ataque={
 2d_physics/layer_1="player"
 2d_physics/layer_2="enemies"
 2d_physics/layer_3="terrain"
-2d_physics/layer_4="level end"
+2d_physics/layer_4="levelend"
 
 [rendering]
 

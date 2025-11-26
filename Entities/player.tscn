@@ -381,7 +381,7 @@ animations = [{
 radius = 18.0
 height = 44.0
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" groups=["Player", "jogador"]]
 texture_filter = 1
 position = Vector2(69, 81)
 collision_mask = 14
@@ -401,13 +401,6 @@ animation = &"attack_model1"
 autoplay = "idle"
 frame = 9
 frame_progress = 1.0
-
-[node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
-limit_left = 0
-limit_top = 0
-limit_right = 1325
-limit_bottom = 350
-position_smoothing_enabled = true
 
 [node name="Area2D_Ataque" type="Area2D" parent="."]
 collision_layer = 4

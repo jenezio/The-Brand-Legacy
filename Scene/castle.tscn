@@ -1,6 +1,7 @@
-[gd_scene load_steps=44 format=4 uid="uid://blbqtmpt52cx7"]
+[gd_scene load_steps=47 format=4 uid="uid://blbqtmpt52cx7"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_hva3m"]
+[ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="2_5r8ci"]
 [ext_resource type="Texture2D" uid="uid://6ia64wa8wefu" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/spikes.png" id="2_13pt3"]
 [ext_resource type="Texture2D" uid="uid://cguljs34uqqvq" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1.png" id="2_87gna"]
 [ext_resource type="Texture2D" uid="uid://yie2fq4meixb" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1_mesclado.png" id="3_13pt3"]
@@ -17,6 +18,10 @@
 [ext_resource type="Texture2D" uid="uid://0qwbpso0meth" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/walls.png" id="14_4ynsg"]
 [ext_resource type="Texture2D" uid="uid://3khngdca5lab" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/windows.png" id="15_uuii1"]
 [ext_resource type="Texture2D" uid="uid://kymsyen7njns" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/blank.png" id="17_hmq6l"]
+[ext_resource type="PackedScene" uid="uid://ydch367el7kt" path="res://camera.tscn" id="18_bpfbj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_godvo"]
+size = Vector2(33, 213)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dti6x"]
 texture = ExtResource("2_13pt3")
@@ -1568,13 +1573,20 @@ texture = ExtResource("17_hmq6l")
 sources/0 = SubResource("TileSetAtlasSource_sxfn6")
 
 [node name="Castle" type="Node2D"]
-metadata/_edit_horizontal_guides_ = [341.0]
-metadata/_edit_vertical_guides_ = [1354.0]
 
 [node name="Player" parent="." instance=ExtResource("1_hva3m")]
 z_index = 2
 position = Vector2(31.0001, 174)
 scale = Vector2(1.02167, 1.14879)
+
+[node name="LevelEnd" parent="." instance=ExtResource("2_5r8ci")]
+position = Vector2(1263, 167)
+next_level = "forest"
+
+[node name="CollisionShape2D" parent="LevelEnd" index="0"]
+z_index = 3
+position = Vector2(72, 28)
+shape = SubResource("RectangleShape2D_godvo")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
@@ -1594,3 +1606,9 @@ collision_visibility_mode = 2
 z_index = -2
 tile_map_data = PackedByteArray("AAA1ABEAAAAAAAAAAAA1ABIAAAAAAAEAAAA2ABEAAAAAAAAAAAA2ABIAAAAAAAEAAAA1AA8AAAAAAAAAAAA1ABAAAAAAAAEAAAA2AA8AAAAAAAAAAAA2ABAAAAAAAAEAAAA1AA0AAAAAAAAAAAA1AA4AAAAAAAEAAAA2AA0AAAAAAAAAAAA2AA4AAAAAAAEAAAA1AAsAAAAAAAAAAAA1AAwAAAAAAAEAAAA2AAsAAAAAAAAAAAA2AAwAAAAAAAEAAAA1AAkAAAAAAAAAAAA1AAoAAAAAAAEAAAA2AAkAAAAAAAAAAAA2AAoAAAAAAAEAAAA1AAcAAAAAAAAAAAA1AAgAAAAAAAEAAAA2AAcAAAAAAAAAAAA2AAgAAAAAAAEAAAAzAAcAAAAAAAAAAAAzAAgAAAAAAAEAAAA0AAcAAAABAAAAAAA0AAgAAAABAAEAAAAxAAcAAAAAAAAAAAAxAAgAAAAAAAEAAAAyAAcAAAABAAAAAAAyAAgAAAABAAEAAAAxAAkAAAAAAAAAAAAxAAoAAAAAAAEAAAAyAAkAAAABAAAAAAAyAAoAAAABAAEAAAAxAAsAAAAAAAAAAAAxAAwAAAAAAAEAAAAyAAsAAAABAAAAAAAyAAwAAAABAAEAAAAzAAkAAAAAAAAAAAAzAAoAAAAAAAEAAAA0AAkAAAABAAAAAAA0AAoAAAABAAEAAAAzAAsAAAAAAAAAAAAzAAwAAAAAAAEAAAA0AAsAAAABAAAAAAA0AAwAAAABAAEAAAAzAA0AAAAAAAAAAAAzAA4AAAAAAAEAAAA0AA0AAAABAAAAAAA0AA4AAAABAAEAAAAzAA8AAAAAAAAAAAAzABAAAAAAAAEAAAA0AA8AAAABAAAAAAA0ABAAAAABAAEAAAAzABEAAAAAAAAAAAAzABIAAAAAAAEAAAA0ABEAAAABAAAAAAA0ABIAAAABAAEAAAAxABEAAAAAAAAAAAAxABIAAAAAAAEAAAAyABEAAAABAAAAAAAyABIAAAABAAEAAAAvABEAAAAAAAAAAAAvABIAAAAAAAEAAAAwABEAAAABAAAAAAAwABIAAAABAAEAAAAvAA8AAAAAAAAAAAAvABAAAAAAAAEAAAAwAA8AAAABAAAAAAAwABAAAAABAAEAAAAxAA8AAAAAAAAAAAAxABAAAAAAAAEAAAAyAA8AAAABAAAAAAAyABAAAAABAAEAAAAxAA0AAAAAAAAAAAAxAA4AAAAAAAEAAAAyAA0AAAABAAAAAAAyAA4AAAABAAEAAAAvAA0AAAAAAAAAAAAvAA4AAAAAAAEAAAAwAA0AAAABAAAAAAAwAA4AAAABAAEAAAAvAAsAAAAAAAAAAAAvAAwAAAAAAAEAAAAwAAsAAAABAAAAAAAwAAwAAAABAAEAAAAvABMAAAAAAAAAAAAvABQAAAAAAAEAAAAwABMAAAABAAAAAAAwABQAAAABAAEAAAAxABMAAAAAAAAAAAAxABQAAAAAAAEAAAAyABMAAAABAAAAAAAyABQAAAABAAEAAAA2ABMAAAAAAAAAAAA2ABQAAAAAAAEAAAA3ABMAAAABAAAAAAA3ABQAAAABAAEAAAA3ABEAAAABAAAAAAA3ABIAAAABAAEAAAA3AA8AAAABAAAAAAA3ABAAAAABAAEAAAA3AA0AAAABAAAAAAA3AA4AAAABAAEAAAA3AAsAAAABAAAAAAA3AAwAAAABAAEAAAA3AAkAAAABAAAAAAA3AAoAAAABAAEAAAA3AAcAAAABAAAAAAA3AAgAAAABAAEAAAA=")
 tile_set = SubResource("TileSet_uvott")
+
+[node name="Camera" parent="." instance=ExtResource("18_bpfbj")]
+limit_right = 1350
+limit_bottom = 390
+
+[editable path="LevelEnd"]

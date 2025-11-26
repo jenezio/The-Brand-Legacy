@@ -1,8 +1,8 @@
-[gd_scene load_steps=17 format=4 uid="uid://3sw031be328q"]
+[gd_scene load_steps=18 format=4 uid="uid://3sw031be328q"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_b2hj7"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_o2q3j"]
-[ext_resource type="PackedScene" uid="uid://ddofpocv1k3xi" path="res://Entities/level_end.tscn" id="3_uehro"]
+[ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="3_uehro"]
 [ext_resource type="Texture2D" uid="uid://dyorwe4xkcw1d" path="res://Sprites/eeeee.png" id="3_wxqtn"]
 [ext_resource type="Texture2D" uid="uid://dbmtlmw1lx5p5" path="res://Sprites/background_set/B1010.png" id="4_0ca2o"]
 [ext_resource type="Texture2D" uid="uid://b4lr4ykyyhakf" path="res://Sprites/background_set/C2011.png" id="5_0ca2o"]
@@ -12,9 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://ck4hmdw862eq3" path="res://Sprites/background_set/bgrd_tree2.png" id="8_0ca2o"]
 [ext_resource type="Texture2D" uid="uid://civejimtrn47u" path="res://Sprites/background_set/céu.png" id="9_u6jjf"]
 [ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="11_2dvii"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uehro"]
-size = Vector2(108, 183.5)
+[ext_resource type="PackedScene" uid="uid://ydch367el7kt" path="res://camera.tscn" id="13_u6jjf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlusy"]
 texture = ExtResource("2_o2q3j")
@@ -1125,19 +1123,15 @@ physics_layer_0/collision_mask = 3
 sources/1 = SubResource("TileSetAtlasSource_jlusy")
 sources/2 = SubResource("TileSetAtlasSource_1wh8k")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u6jjf"]
+size = Vector2(41, 164.5)
+
 [node name="Forest" type="Node2D"]
 position = Vector2(20, 15)
-metadata/_edit_vertical_guides_ = [1599.0]
-
-[node name="LevelEND" parent="." instance=ExtResource("3_uehro")]
-position = Vector2(1636, 111)
-
-[node name="CollisionShape2D" parent="LevelEND" index="0"]
-position = Vector2(0, -33.25)
-shape = SubResource("RectangleShape2D_uehro")
+metadata/_edit_vertical_guides_ = [1599.0, 1600.0]
 
 [node name="Player" parent="." instance=ExtResource("1_b2hj7")]
-position = Vector2(1508, 123)
+position = Vector2(20, 118)
 
 [node name="Enemy" parent="." instance=ExtResource("11_2dvii")]
 position = Vector2(1199, 139)
@@ -1216,4 +1210,16 @@ scale = Vector2(0.515, 0.508772)
 texture = ExtResource("9_u6jjf")
 centered = false
 
-[editable path="LevelEND"]
+[node name="Camera" parent="." instance=ExtResource("13_u6jjf")]
+limit_top = 0
+limit_right = 1600
+
+[node name="LevelEnd" parent="." instance=ExtResource("3_uehro")]
+position = Vector2(1588, 147)
+next_level = "castle"
+
+[node name="CollisionShape2D" parent="LevelEnd" index="0"]
+position = Vector2(-4, -68.75)
+shape = SubResource("RectangleShape2D_u6jjf")
+
+[editable path="LevelEnd"]
