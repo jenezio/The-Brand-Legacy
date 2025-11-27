@@ -1208,7 +1208,7 @@ position = Vector2(21, 15)
 metadata/_edit_vertical_guides_ = [1599.0, 1600.0]
 
 [node name="Player" parent="." instance=ExtResource("1_b2hj7")]
-position = Vector2(1068, 41)
+position = Vector2(102, 142)
 
 [node name="Enemy" parent="." instance=ExtResource("11_2dvii")]
 position = Vector2(1199, 139)
