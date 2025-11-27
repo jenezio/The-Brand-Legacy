@@ -1,13 +1,14 @@
-[gd_scene load_steps=47 format=4 uid="uid://blbqtmpt52cx7"]
+[gd_scene load_steps=50 format=4 uid="uid://cdgof6ajxlmxf"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_hva3m"]
-[ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="2_5r8ci"]
+[ext_resource type="PackedScene" uid="uid://dptgu85cgwv73" path="res://Entities/level_end.tscn" id="2_5r8ci"]
 [ext_resource type="Texture2D" uid="uid://6ia64wa8wefu" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/spikes.png" id="2_13pt3"]
 [ext_resource type="Texture2D" uid="uid://cguljs34uqqvq" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1.png" id="2_87gna"]
 [ext_resource type="Texture2D" uid="uid://yie2fq4meixb" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1_mesclado.png" id="3_13pt3"]
 [ext_resource type="Texture2D" uid="uid://ccyxjwww5k0vb" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/brick_mesclado.png" id="4_hmq6l"]
 [ext_resource type="Texture2D" uid="uid://brqf6ahblqy4h" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/brick_sides_mesclado.png" id="5_bpfbj"]
 [ext_resource type="Texture2D" uid="uid://v0udqoa2m7u4" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/ceilling.png" id="6_5r8ci"]
+[ext_resource type="PackedScene" uid="uid://due266gpvcejh" path="res://Entities/pausa_menu.tscn" id="6_xowb1"]
 [ext_resource type="Texture2D" uid="uid://bjlkyacwaip6v" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/ceilling_corner_transparent.png" id="7_godvo"]
 [ext_resource type="Texture2D" uid="uid://ca8e7e8x0f4r7" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/column.png" id="8_dti6x"]
 [ext_resource type="Texture2D" uid="uid://byg13tqbop2o3" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/damaged_brick.png" id="9_sxfn6"]
@@ -18,7 +19,9 @@
 [ext_resource type="Texture2D" uid="uid://0qwbpso0meth" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/walls.png" id="14_4ynsg"]
 [ext_resource type="Texture2D" uid="uid://3khngdca5lab" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/windows.png" id="15_uuii1"]
 [ext_resource type="Texture2D" uid="uid://kymsyen7njns" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/blank.png" id="17_hmq6l"]
-[ext_resource type="PackedScene" uid="uid://ydch367el7kt" path="res://camera.tscn" id="18_bpfbj"]
+[ext_resource type="PackedScene" path="res://camera.tscn" id="18_bpfbj"]
+[ext_resource type="PackedScene" uid="uid://cokhp4qpk5syb" path="res://Scene/ui.tscn" id="21_sxfn6"]
+[ext_resource type="PackedScene" uid="uid://coktgah7pakn6" path="res://Scene/game_over_layer.tscn" id="22_uvott"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_godvo"]
 size = Vector2(33, 213)
@@ -1642,5 +1645,11 @@ limit_left = 35
 limit_top = 0
 limit_right = 1950
 limit_bottom = 345
+
+[node name="PausaMenu" parent="." instance=ExtResource("6_xowb1")]
+
+[node name="UI" parent="." instance=ExtResource("21_sxfn6")]
+
+[node name="GameOverLayer" parent="." instance=ExtResource("22_uvott")]
 
 [editable path="LevelEnd"]

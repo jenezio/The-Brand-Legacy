@@ -1,8 +1,8 @@
-[gd_scene load_steps=26 format=4 uid="uid://3sw031be328q"]
+[gd_scene load_steps=21 format=4 uid="uid://3sw031be328q"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_b2hj7"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_o2q3j"]
-[ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="3_uehro"]
+[ext_resource type="PackedScene" uid="uid://dptgu85cgwv73" path="res://Entities/level_end.tscn" id="3_uehro"]
 [ext_resource type="Texture2D" uid="uid://dyorwe4xkcw1d" path="res://Sprites/eeeee.png" id="3_wxqtn"]
 [ext_resource type="Texture2D" uid="uid://dsn0p3i34js61" path="res://Sprites/background_set/estrelas.png" id="5_2dvii"]
 [ext_resource type="Texture2D" uid="uid://d2ul6wjxlnss" path="res://Sprites/background_set/B1010 mais escuro.png" id="5_u6jjf"]
@@ -12,11 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://ch1yxg150eibt" path="res://Sprites/background_set/C2013 mais escura.png" id="8_a2akr"]
 [ext_resource type="Texture2D" uid="uid://civejimtrn47u" path="res://Sprites/background_set/céu.png" id="9_u6jjf"]
 [ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="11_2dvii"]
-[ext_resource type="PackedScene" uid="uid://ydch367el7kt" path="res://camera.tscn" id="13_u6jjf"]
-[ext_resource type="Script" uid="uid://c1cb66u77w2ao" path="res://Scene/health_bar.gd" id="14_3tkwh"]
-[ext_resource type="FontFile" uid="uid://bccmf7cjvtlsr" path="res://Fonts/Violance Thriller.ttf" id="15_a2akr"]
-[ext_resource type="Script" uid="uid://2h3sw2ahidyd" path="res://Scene/game_over_screen.gd" id="15_h6do7"]
-[ext_resource type="FontFile" uid="uid://dueij2t7ma1kn" path="res://Fonts/PERRYGOT.TTF" id="17_k54tc"]
+[ext_resource type="PackedScene" path="res://camera.tscn" id="13_u6jjf"]
+[ext_resource type="PackedScene" uid="uid://cokhp4qpk5syb" path="res://Scene/ui.tscn" id="14_jnhfv"]
+[ext_resource type="PackedScene" uid="uid://coktgah7pakn6" path="res://Scene/game_over_layer.tscn" id="15_h6do7"]
+[ext_resource type="PackedScene" uid="uid://due266gpvcejh" path="res://Entities/pausa_menu.tscn" id="16_k54tc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlusy"]
 texture = ExtResource("2_o2q3j")
@@ -1138,40 +1137,6 @@ sources/2 = SubResource("TileSetAtlasSource_1wh8k")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u6jjf"]
 size = Vector2(41, 164.5)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tkwh"]
-bg_color = Color(0.13398606, 0.0023205376, 0, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 0.2627451)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2akr"]
-bg_color = Color(0.24315274, 0.010741, 0, 1)
-border_width_left = 1
-border_width_top = 1
-border_color = Color(0.17828661, 1.1882279e-07, 0.023226373, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6do7"]
-bg_color = Color(0.12156863, 0, 0, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.19489294, 1.17318706e-07, 1.8049032e-08, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="LabelSettings" id="LabelSettings_jnhfv"]
-font = ExtResource("15_a2akr")
-font_size = 72
-font_color = Color(0, 0, 0, 0.5764706)
-outline_size = 1
-outline_color = Color(0.12038336, 6.053946e-08, 1.8049032e-08, 1)
-shadow_color = Color(0.2086803, 1.5191269e-07, 2.4065375e-08, 1)
-
 [node name="Forest" type="Node2D"]
 position = Vector2(20, 15)
 metadata/_edit_vertical_guides_ = [1599.0, 1600.0]
@@ -1269,99 +1234,10 @@ next_level = "castle"
 position = Vector2(-4, -68.75)
 shape = SubResource("RectangleShape2D_u6jjf")
 
-[node name="UI" type="CanvasLayer" parent="."]
-process_mode = 1
+[node name="UI" parent="." instance=ExtResource("14_jnhfv")]
 
-[node name="HUD" type="Control" parent="UI"]
-process_mode = 1
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="GameOverLayer" parent="." instance=ExtResource("15_h6do7")]
 
-[node name="health_bar" type="ProgressBar" parent="UI/HUD"]
-layout_mode = 1
-offset_left = 3.0
-offset_top = 28.0
-offset_right = 103.0
-offset_bottom = 35.0
-theme_override_styles/background = SubResource("StyleBoxFlat_3tkwh")
-theme_override_styles/fill = SubResource("StyleBoxFlat_a2akr")
-max_value = 5.0
-value = 5.0
-show_percentage = false
-script = ExtResource("14_3tkwh")
-
-[node name="GameOverLayer" type="CanvasLayer" parent="."]
-process_mode = 3
-layer = 100
-
-[node name="GameOverScreen" type="Control" parent="GameOverLayer"]
-process_mode = 3
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("15_h6do7")
-
-[node name="ColorRect" type="ColorRect" parent="GameOverLayer/GameOverScreen"]
-process_mode = 3
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0.5882353)
-
-[node name="QuitButton" type="Button" parent="GameOverLayer/GameOverScreen/ColorRect"]
-process_mode = 3
-layout_mode = 0
-offset_left = 12.0
-offset_top = 130.0
-offset_right = 112.0
-offset_bottom = 180.0
-theme_override_colors/font_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
-theme_override_fonts/font = ExtResource("17_k54tc")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_h6do7")
-text = "Quit
-"
-
-[node name="RestartButton" type="Button" parent="GameOverLayer/GameOverScreen/ColorRect"]
-process_mode = 3
-layout_mode = 0
-offset_left = 152.0
-offset_top = 131.0
-offset_right = 285.0
-offset_bottom = 181.0
-focus_mode = 1
-theme_override_colors/font_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
-theme_override_fonts/font = ExtResource("17_k54tc")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_h6do7")
-text = "Reiniciar"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameOverLayer/GameOverScreen/ColorRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.247
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 30
-
-[node name="Label" type="Label" parent="GameOverLayer/GameOverScreen/ColorRect/VBoxContainer"]
-layout_mode = 2
-text = "GAME OVER"
-label_settings = SubResource("LabelSettings_jnhfv")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="PausaMenu" parent="." instance=ExtResource("16_k54tc")]
 
 [editable path="LevelEnd"]

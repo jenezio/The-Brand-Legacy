@@ -1,0 +1,95 @@
+[gd_scene load_steps=6 format=3 uid="uid://coktgah7pakn6"]
+
+[ext_resource type="Script" path="res://Scene/game_over_screen.gd" id="1_6vb04"]
+[ext_resource type="FontFile" uid="uid://dueij2t7ma1kn" path="res://Fonts/PERRYGOT.TTF" id="2_4nosm"]
+[ext_resource type="FontFile" uid="uid://bccmf7cjvtlsr" path="res://Fonts/Violance Thriller.ttf" id="3_iwish"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j3cfd"]
+bg_color = Color(0.12156863, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19489294, 1.17318706e-07, 1.8049032e-08, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_ccbh7"]
+font = ExtResource("3_iwish")
+font_size = 72
+font_color = Color(0, 0, 0, 0.5764706)
+outline_size = 1
+outline_color = Color(0.12038336, 6.053946e-08, 1.8049032e-08, 1)
+shadow_color = Color(0.2086803, 1.5191269e-07, 2.4065375e-08, 1)
+
+[node name="GameOverLayer" type="CanvasLayer"]
+process_mode = 3
+layer = 100
+
+[node name="GameOverScreen" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6vb04")
+
+[node name="ColorRect" type="ColorRect" parent="GameOverScreen"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="QuitButton" type="Button" parent="GameOverScreen/ColorRect"]
+process_mode = 3
+layout_mode = 0
+offset_left = 12.0
+offset_top = 130.0
+offset_right = 112.0
+offset_bottom = 180.0
+theme_override_colors/font_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
+theme_override_fonts/font = ExtResource("2_4nosm")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_j3cfd")
+text = "Quit
+"
+
+[node name="RestartButton" type="Button" parent="GameOverScreen/ColorRect"]
+process_mode = 3
+layout_mode = 0
+offset_left = 152.0
+offset_top = 131.0
+offset_right = 285.0
+offset_bottom = 181.0
+focus_mode = 1
+theme_override_colors/font_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
+theme_override_fonts/font = ExtResource("2_4nosm")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_j3cfd")
+text = "Reiniciar"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.247
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="GameOverScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_ccbh7")
+horizontal_alignment = 1
+vertical_alignment = 1
