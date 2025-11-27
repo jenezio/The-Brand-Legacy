@@ -21,6 +21,8 @@ enum State { PATROL, CHASE, ATTACK, HIT, DEAD }
 @export var attack_damage := 1
 @export var max_health := 3
 @export var attack_cooldown_time := 1.8
+@onready var hit_skeleton: AudioStreamPlayer = $hit_skeleton
+@onready var skeleton_death: AudioStreamPlayer = $skeleton_death
 
 const GRAVITY := 980.0
 
@@ -253,6 +255,7 @@ func take_damage(amount: int) -> void:
 	if health <= 0:
 		# ========== MORTE ==========
 		print("💀 Inimigo morreu!")
+		skeleton_death.play()
 		is_dead = true
 		is_hitting = true
 		is_attacking = false
@@ -278,6 +281,7 @@ func take_damage(amount: int) -> void:
 	else:
 		# ========== HIT ==========
 		print("🩹 Inimigo levou hit")
+		hit_skeleton.play()
 		is_hitting = true
 		is_attacking = false
 		
