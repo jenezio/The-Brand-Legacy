@@ -11,7 +11,7 @@ enum State { PATROL, CHASE, ATTACK, HIT, DEAD }
 @export_group("Movimento")
 @export var patrol_speed := 60.0
 @export var chase_speed := 100.0
-@export var patrol_distance := 150.0
+@export var patrol_distance := 150.0  # Distância total de patrulha (ponto A até ponto B)
 
 @export_group("Detecção")
 @export var vision_distance := 250.0
@@ -30,7 +30,8 @@ const GRAVITY := 980.0
 var current_state = State.PATROL
 var health := 3
 var direction := 1
-var patrol_start_x: float
+var patrol_point_a: float  # Ponto inicial da patrulha
+var patrol_point_b: float  # Ponto final da patrulha
 var is_attacking := false
 var is_hitting := false
 var is_dead := false
@@ -58,7 +59,19 @@ var attack_cooldown: Timer
 # ===========================================
 func _ready() -> void:
     health = max_health
-    patrol_start_x = global_position.x
+    
+    # ========== CONFIGURA PONTOS DE PATRULHA ==========
+    patrol_point_a = global_position.x - (patrol_distance / 2)
+    patrol_point_b = global_position.x + (patrol_distance / 2)
+    
+    # Inicia indo para a direita
+    direction = 1
+    
+    print("🚶 Patrulha configurada:")
+    print("  Ponto A (esquerda): ", patrol_point_a)
+    print("  Ponto B (direita): ", patrol_point_b)
+    print("  Distância total: ", patrol_distance)
+    # =================================================
     
     # Timer de Cooldown
     attack_cooldown = Timer.new()
@@ -76,11 +89,8 @@ func _ready() -> void:
     if damage_area:
         if not damage_area.body_entered.is_connected(_on_area_2d_dano_player_body_entered):
             damage_area.body_entered.connect(_on_area_2d_dano_player_body_entered)
-            print("✅ Sinal body_entered conectado via código!")
         else:
             print("⚠️ Sinal body_entered JÁ estava conectado")
-    else:
-        print("❌ ERRO: Area2D_DanoPlayer não encontrada!")
     
     # Conectar sinais da área de visão
     if vision_area:
@@ -101,7 +111,7 @@ func _find_player() -> void:
         player = players[0]
         print("🎯 Player encontrado: ", player.name)
     else:
-        print("⚠️ AVISO: Player não encontrado! Adicione o Player ao grupo 'Player'")
+        print("⚠️ AVISO: Player não encontrado!")
 
 # ===========================================
 # LOOP PRINCIPAL
@@ -149,16 +159,27 @@ func _state_patrol() -> void:
     _play_animation("walk")
     _update_sprite_direction()
     
-    var distance_from_start = abs(global_position.x - patrol_start_x)
-    if distance_from_start >= patrol_distance:
-        direction *= -1
+    # ========== LÓGICA DE PATRULHA MELHORADA ==========
+    # Verifica se chegou no ponto B (direita)
+    if direction > 0 and global_position.x >= patrol_point_b:
+        direction = -1
+        print("🔄 Chegou no ponto B, virando para esquerda")
     
+    # Verifica se chegou no ponto A (esquerda)
+    elif direction < 0 and global_position.x <= patrol_point_a:
+        direction = 1
+        print("🔄 Chegou no ponto A, virando para direita")
+    # =================================================
+    
+    # Detecção de parede
     if wall_check:
         wall_check.target_position.x = direction * 25
         wall_check.force_raycast_update()
         if wall_check.is_colliding():
             direction *= -1
+            print("🧱 Bateu na parede, invertendo direção")
     
+    # Detecta player
     if is_instance_valid(player) and distance_to_player < vision_distance:
         _change_state(State.CHASE)
 
@@ -197,7 +218,6 @@ func _state_attack() -> void:
     if not is_attacking:
         is_attacking = true
         
-        # Ativa a área de dano
         if damage_area:
             damage_area.monitoring = true
         
@@ -226,12 +246,10 @@ func _play_animation(anim_name: String) -> void:
         return
     
     if not anim.sprite_frames.has_animation(anim_name):
-        print("⚠️ Animação '", anim_name, "' não encontrada!")
         return
     
     if anim.animation != anim_name:
         anim.play(anim_name)
-        print("🎬 Tocando animação: ", anim_name)
 
 func _update_sprite_direction() -> void:
     if anim:
@@ -241,17 +259,13 @@ func _update_sprite_direction() -> void:
 # SISTEMA DE DANO
 # ===========================================
 func take_damage(amount: int) -> void:
-    if is_dead:
-        return
-    
-    if is_hitting:
+    if is_dead or is_hitting:
         return
     
     health -= amount
     print("💔 Inimigo levou ", amount, " de dano. Vida restante: ", health, "/", max_health)
     
     if health <= 0:
-        # ========== MORTE ==========
         print("💀 Inimigo morreu!")
         is_dead = true
         is_hitting = true
@@ -261,7 +275,6 @@ func take_damage(amount: int) -> void:
         _change_state(State.DEAD)
         _play_animation("dead")
         
-        # Desabilita colisões usando set_deferred
         if collision:
             collision.set_deferred("disabled", true)
         
@@ -276,7 +289,6 @@ func take_damage(amount: int) -> void:
         set_physics_process(false)
         
     else:
-        # ========== HIT ==========
         print("🩹 Inimigo levou hit")
         is_hitting = true
         is_attacking = false
@@ -284,7 +296,6 @@ func take_damage(amount: int) -> void:
         _change_state(State.HIT)
         _play_animation("hit")
         
-        # Flash branco
         modulate = Color(3, 3, 3, 1)
         
         var flash_timer = get_tree().create_timer(0.2)
@@ -301,12 +312,11 @@ func _on_animation_finished() -> void:
         return
     
     var finished_anim = anim.animation
-    print("✅ Animação finalizada: ", finished_anim)
     
     match finished_anim:
         "hit":
             is_hitting = false
-            print("🩹 Hit terminou, voltando ao combate")
+            print("🩹 Hit terminou")
             
             if is_instance_valid(player) and distance_to_player < vision_distance:
                 _change_state(State.CHASE)
@@ -317,54 +327,37 @@ func _on_animation_finished() -> void:
             is_attacking = false
             can_attack = false
             attack_cooldown.start()
-            print("⚔️ Ataque terminou, cooldown iniciado")
+            print("⚔️ Ataque terminou")
             
-            # Desativa área de dano
             if damage_area:
                 damage_area.monitoring = false
             
-            # Volta a perseguir OU patrulhar
             if is_instance_valid(player) and distance_to_player < vision_distance:
                 _change_state(State.CHASE)
             else:
                 _change_state(State.PATROL)
         
         "dead":
-            print("💀 Animação de morte terminou, removendo inimigo")
+            print("💀 Removendo inimigo")
             queue_free()
 
 func _on_attack_cooldown_timeout() -> void:
     can_attack = true
-    print("✅ Cooldown de ataque terminou")
+    print("✅ Cooldown terminou")
 
 # ===========================================
 # SINAIS DAS ÁREAS
 # ===========================================
 func _on_area_2d_dano_player_body_entered(body: Node2D) -> void:
-    print("🔍 === DEBUG ÁREA DE DANO ===")
-    print("  📦 Corpo: ", body.name)
-    print("  👥 Grupos: ", body.get_groups())
-    print("  ⚔️ is_attacking: ", is_attacking)
-    
-    if not is_attacking:
-        print("  ❌ NÃO está atacando")
-        return
-    
-    if is_dead or is_hitting:
-        print("  ❌ Morto ou hit")
+    if not is_attacking or is_dead or is_hitting:
         return
     
     if not body.is_in_group("Player"):
-        print("  ❌ NÃO é Player")
         return
-    
-    print("  ✅ VAI CAUSAR DANO!")
     
     if body.has_method("take_damage"):
         body.take_damage(attack_damage)
-        print("  💥 ACERTOU O PLAYER! Causou ", attack_damage, " de dano!")
-    else:
-        print("  ❌ Player não tem método take_damage")
+        print("💥 Acertou o player!")
 
 func _on_area_2d_visao_body_entered(body: Node2D) -> void:
     if body.is_in_group("Player") and not is_dead:
