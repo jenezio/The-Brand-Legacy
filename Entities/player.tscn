@@ -1,148 +1,364 @@
-[gd_scene load_steps=39 format=3 uid="uid://ditjcd3xtjpu8"]
+[gd_scene load_steps=48 format=3 uid="uid://ditjcd3xtjpu8"]
 
 [ext_resource type="Texture2D" uid="uid://dtsai5184qohq" path="res://Personagem Frames/Idle.png" id="2_gb1tc"]
 [ext_resource type="Texture2D" uid="uid://1s20avgesdoq" path="res://Personagem Frames/Attacks_shorted2.PNG" id="2_kee72"]
+[ext_resource type="Texture2D" uid="uid://g2friv6hs0kr" path="res://Personagem Frames/Death.png" id="2_prmdv"]
+[ext_resource type="Texture2D" uid="uid://c5oaohn6yox2t" path="res://Personagem Frames/Hurt.png" id="3_s1j76"]
 [ext_resource type="Texture2D" uid="uid://b4035ge8e0lm0" path="res://Personagem Frames/Jump.png" id="3_taegk"]
 [ext_resource type="Texture2D" uid="uid://dljlymves2eej" path="res://Personagem Frames/Run.png" id="3_xd3k7"]
 
 [sub_resource type="GDScript" id="GDScript_taegk"]
 script/source = "extends CharacterBody2D
 
-# -----------------
-# @ONREADY E EXPORTS
-# -----------------
+# ===========================================
+# SINAIS
+# ===========================================
+signal health_changed(nova_vida: int)
+signal player_died()
+
+# ===========================================
+# @ONREADY
+# ===========================================
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $Area2D_Ataque
 
+# ===========================================
+# @EXPORT
+# ===========================================
+@export_group(\"Movimento\")
 @export var speed := 120.0
 @export var jump_force := -300.0
 @export var gravity := 900.0
-@export var max_vidas := 3
 
-# -----------------
-# VARIÁVEIS DE ESTADO
-# -----------------
+@export_group(\"Combate\")
+@export var max_vidas := 5
+@export var invencibility_time := 1.0
+
+@export_group(\"Debug\")
+@export var show_debug_info := true
+
+# ===========================================
+# VARIÁVEIS
+# ===========================================
+var vidas := 5
 var is_attacking := false
 var has_damaged := false
-var vidas := 3
-var is_dead := false 
+var is_dead := false
+var is_hurt := false
+var is_invincible := false
 
-# -----------------
-# FUNÇÕES NATIVAS
-# -----------------
-func _ready():
-	vidas = max_vidas
-	attack_area.monitoring = false
-	
-	# Garante a conexão da animação via código
-	if not anim.animation_finished.is_connected(_on_animated_sprite_2d_animation_finished):
-		anim.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
+var invincibility_timer: Timer
+var hurt_animation_timer: Timer
 
-func _physics_process(delta):
-	if is_dead:
-		velocity = Vector2.ZERO
-		move_and_slide()
-		return 
-	
-	# === A LÓGICA DE SEGURANÇA FOI MOVIDA PARA CÁ (Linhas 40-43 anteriores) ===
-	# --- Lógica de Segurança (Resetar ataque se a animação falhar) ---
-	if is_attacking and anim.animation != \"attack_model1\":
-		is_attacking = false
-		attack_area.monitoring = false
-		has_damaged = false
-		
-	# --- ATAQUE ---
-	if Input.is_action_just_pressed(\"ataque\") and is_on_floor() and not is_attacking:
-		is_attacking = true
-		has_damaged = false
-		velocity.x = 0
-		attack_area.monitoring = true
-		anim.play(\"attack_model1\")
+# ===========================================
+# READY
+# ===========================================
+func _ready() -> void:
+    vidas = max_vidas
+    attack_area.monitoring = false
+    
+    _setup_timers()
+    _connect_signals()
+    
+    if show_debug_info:
+        print(\"🎮 Player inicializado. Vida: \", vidas, \"/\", max_vidas)
 
-	# --- MOVIMENTO (desativado durante ataque) ---
-	if not is_attacking:
-		# Pulo
-		if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
-			velocity.y = jump_force
+func _setup_timers() -> void:
+    \"\"\"Configura timers\"\"\"
+    
+    # Timer de invencibilidade
+    invincibility_timer = Timer.new()
+    invincibility_timer.wait_time = invencibility_time
+    invincibility_timer.one_shot = true
+    invincibility_timer.timeout.connect(_on_invincibility_timeout)
+    add_child(invincibility_timer)
+    
+    # Timer de hurt
+    hurt_animation_timer = Timer.new()
+    hurt_animation_timer.wait_time = 0.4
+    hurt_animation_timer.one_shot = true
+    hurt_animation_timer.timeout.connect(_on_hurt_animation_timeout)
+    add_child(hurt_animation_timer)
 
-		# Andar
-		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+func _connect_signals() -> void:
+    \"\"\"Conecta sinais\"\"\"
+    if not anim.animation_finished.is_connected(_on_animation_finished):
+        anim.animation_finished.connect(_on_animation_finished)
+        if show_debug_info:
+            print(\"✅ Sinais conectados\")
 
-		if direction:
-			velocity.x = direction * speed
-			anim.scale.x = direction
-		else:
-			velocity.x = move_toward(velocity.x, 0, speed)
+# ===========================================
+# PHYSICS
+# ===========================================
+func _physics_process(delta: float) -> void:
+    if is_dead:
+        velocity = Vector2.ZERO
+        move_and_slide()
+        return
+    
+    if is_hurt:
+        velocity.x = 0
+        _apply_gravity(delta)
+        move_and_slide()
+        return
+    
+    if is_attacking and anim.animation != \"attack_model1\":
+        _reset_attack()
+    
+    _apply_gravity(delta)
+    _handle_input()
+    _update_animations()
+    
+    move_and_slide()
 
-		# ANIMAÇÕES
-		if not is_on_floor():
-			if anim.animation != \"jump\":
-				anim.play(\"jump\")
-		else:
-			if direction:
-				if anim.animation != \"walk\":
-					anim.play(\"walk\")
-			else:
-				if anim.animation != \"idle\":
-					anim.play(\"idle\")
+func _apply_gravity(delta: float) -> void:
+    \"\"\"Gravidade\"\"\"
+    if not is_on_floor():
+        velocity.y += gravity * delta
+    else:
+        velocity.y = 0
 
-	# Gravidade
-	if not is_on_floor():
-		velocity.y += gravity * delta
-		
-	move_and_slide()
+func _handle_input() -> void:
+    \"\"\"Input\"\"\"
+    
+    if Input.is_action_just_pressed(\"ataque\") and is_on_floor() and not is_attacking:
+        _start_attack()
+        return
+    
+    if is_attacking:
+        velocity.x = 0
+        return
+    
+    if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+        velocity.y = jump_force
+        if show_debug_info:
+            print(\"⬆️ Pulo!\")
+    
+    var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+    
+    if direction != 0:
+        velocity.x = direction * speed
+        anim.scale.x = direction
+    else:
+        velocity.x = move_toward(velocity.x, 0, speed)
 
-# -----------------
-# FUNÇÕES DE ESTADO
-# -----------------
-# Reseta o estado de ataque
-func _on_animated_sprite_2d_animation_finished():
-	if anim.animation == \"attack_model1\":
-		is_attacking = false
-		attack_area.monitoring = false
-		has_damaged = false
-	
-	# Morte do Player
-	if anim.animation == \"death\":
-		queue_free()
+func _update_animations() -> void:
+    \"\"\"Animações\"\"\"
+    
+    if is_dead or is_hurt or is_attacking:
+        return
+    
+    if not is_on_floor():
+        _play_animation(\"jump\")
+    else:
+        if abs(velocity.x) > 10:
+            _play_animation(\"walk\")
+        else:
+            _play_animation(\"idle\")
 
-# Jogador toma dano
-func take_damage(amount: int):
-	if is_dead:
-		return
+func _play_animation(anim_name: String) -> void:
+    \"\"\"Toca animação\"\"\"
+    if anim.animation != anim_name:
+        anim.play(anim_name)
 
-	vidas -= amount
-	print(\"Vidas restantes (Player): \", vidas)
-	
-	if vidas <= 0:
-		is_dead = true
-		velocity = Vector2.ZERO
-		
-		print(\"Player morreu\")
-		
-		if anim.has_animation(\"death\"):
-			anim.play(\"death\")
-		else:
-			queue_free()
+# ===========================================
+# ATAQUE
+# ===========================================
+func _start_attack() -> void:
+    \"\"\"Inicia ataque\"\"\"
+    is_attacking = true
+    has_damaged = false
+    velocity.x = 0
+    attack_area.monitoring = true
+    _play_animation(\"attack_model1\")
+    
+    if show_debug_info:
+        print(\"⚔️ Atacando!\")
 
-# -----------------
-# FUNÇÕES DE COLISÃO
-# -----------------
-# Dano no Inimigo (Conectado ao sinal 'body_entered' do Area2D_Ataque)
-func _on_area_2d_ataque_body_entered(body: Node2D): 
-	if is_attacking and not has_damaged:
-		if body.is_in_group(\"Enemy\"):
-			var enemy = body as CharacterBody2D 
-			if enemy != null and enemy.has_method(\"take_damage\"):
-				
-				if !enemy.is_hitting and !enemy.is_dead: 
-					enemy.take_damage(1)
-					has_damaged = true
+func _reset_attack() -> void:
+    \"\"\"Reseta ataque\"\"\"
+    is_attacking = false
+    attack_area.monitoring = false
+    has_damaged = false
+
+# ===========================================
+# DANO
+# ===========================================
+func take_damage(amount: int) -> void:
+    \"\"\"Recebe dano\"\"\"
+    
+    if is_dead or is_invincible:
+        if show_debug_info and is_invincible:
+            print(\"🛡️ Invencível!\")
+        return
+    
+    if is_hurt:
+        return
+    
+    vidas -= amount
+    
+    if show_debug_info:
+        print(\"💔 Levou \", amount, \" de dano! Vidas: \", vidas, \"/\", max_vidas)
+    
+    health_changed.emit(vidas)
+    
+    if vidas <= 0:
+        _player_death()
+    else:
+        _player_hurt()
+
+func _player_hurt() -> void:
+    \"\"\"Leva dano\"\"\"
+    is_hurt = true
+    velocity = Vector2.ZERO
+    
+    if is_attacking:
+        _reset_attack()
+    
+    _play_animation(\"hurt\")
+    _flash_damage()
+    
+    is_invincible = true
+    invincibility_timer.start()
+    hurt_animation_timer.start()
+    
+    if show_debug_info:
+        print(\"🤕 Levou hit!\")
+
+func _player_death() -> void:
+    \"\"\"Morre\"\"\"
+    is_dead = true
+    is_hurt = false
+    is_attacking = false
+    velocity = Vector2.ZERO
+    
+    # Para timers
+    if invincibility_timer and invincibility_timer.time_left > 0:
+        invincibility_timer.stop()
+    if hurt_animation_timer and hurt_animation_timer.time_left > 0:
+        hurt_animation_timer.stop()
+    
+    # Desativa física
+    set_physics_process(false)
+    
+    # Emite sinal
+    player_died.emit()
+    
+    if show_debug_info:
+        print(\"💀 Morreu!\")
+    
+    # Toca animação de morte
+    if anim and anim.sprite_frames and anim.sprite_frames.has_animation(\"death\"):
+        _play_animation(\"death\")
+    else:
+        queue_free()
+
+# ===========================================
+# TIMERS
+# ===========================================
+func _on_invincibility_timeout() -> void:
+    \"\"\"Invencibilidade OFF\"\"\"
+    is_invincible = false
+    modulate = Color(1, 1, 1, 1)
+    
+    if show_debug_info:
+        print(\"🛡️ Invencibilidade OFF\")
+
+func _on_hurt_animation_timeout() -> void:
+    \"\"\"Hurt terminou\"\"\"
+    is_hurt = false
+    
+    if show_debug_info:
+        print(\"✅ Hurt terminou\")
+
+# ===========================================
+# ANIMAÇÃO FINISHED
+# ===========================================
+func _on_animation_finished() -> void:
+    \"\"\"Animação terminou\"\"\"
+    var finished_anim = anim.animation
+    
+    match finished_anim:
+        \"attack_model1\":
+            _reset_attack()
+            if show_debug_info:
+                print(\"✅ Ataque terminou\")
+        
+        \"hurt\":
+            pass
+        
+        \"death\":
+            if show_debug_info:
+                print(\"💀 Removendo player\")
+            await get_tree().create_timer(1.0).timeout
+            queue_free()
+
+# ===========================================
+# EFEITOS
+# ===========================================
+func _flash_damage() -> void:
+    \"\"\"Flash vermelho\"\"\"
+    modulate = Color(5, 0.5, 0.5, 1)
+    await get_tree().create_timer(0.15).timeout
+    
+    if not is_dead:
+        if is_invincible:
+            _start_invincibility_flicker()
+        else:
+            modulate = Color(1, 1, 1, 1)
+
+func _start_invincibility_flicker() -> void:
+    \"\"\"Piscar\"\"\"
+    var flicker_time = 0.1
+    var total_time = invencibility_time
+    var elapsed = 0.0
+    
+    while elapsed < total_time and is_invincible:
+        modulate.a = 0.5
+        await get_tree().create_timer(flicker_time).timeout
+        elapsed += flicker_time
+        
+        if not is_invincible:
+            break
+        
+        modulate.a = 1.0
+        await get_tree().create_timer(flicker_time).timeout
+        elapsed += flicker_time
+    
+    modulate = Color(1, 1, 1, 1)
+
+# ===========================================
+# COLISÃO DE ATAQUE
+# ===========================================
+func _on_area_2d_ataque_body_entered(body: Node2D) -> void:
+    \"\"\"Ataca inimigo\"\"\"
+    
+    if not is_attacking or has_damaged:
+        return
+    
+    if not body.is_in_group(\"Enemy\"):
+        return
+    
+    var enemy = body as CharacterBody2D
+    if enemy == null:
+        return
+    
+    if not enemy.has_method(\"take_damage\"):
+        return
+    
+    if enemy.is_hitting or enemy.is_dead:
+        return
+    
+    enemy.take_damage(1)
+    has_damaged = true
+    
+    if show_debug_info:
+        print(\"⚔️ Acertou inimigo!\")
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ypkcv"]
-radius = 13.0
-height = 44.0
+radius = 14.0
+height = 46.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x5h13"]
 atlas = ExtResource("2_kee72")
@@ -183,6 +399,34 @@ region = Rect2(0, 64, 128, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_w8hnq"]
 atlas = ExtResource("2_kee72")
 region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vknsg"]
+atlas = ExtResource("2_prmdv")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_005q7"]
+atlas = ExtResource("2_prmdv")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vikf"]
+atlas = ExtResource("2_prmdv")
+region = Rect2(0, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbmgb"]
+atlas = ExtResource("2_prmdv")
+region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8fg7"]
+atlas = ExtResource("3_s1j76")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qbjbd"]
+atlas = ExtResource("3_s1j76")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ka26g"]
+atlas = ExtResource("3_s1j76")
+region = Rect2(0, 64, 128, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xd3k7"]
 atlas = ExtResource("2_gb1tc")
@@ -299,6 +543,37 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_model1",
+"speed": 19.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vknsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_005q7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vikf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbmgb")
+}],
+"loop": false,
+"name": &"death",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8fg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qbjbd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ka26g")
+}],
+"loop": false,
+"name": &"hurt",
 "speed": 10.0
 }, {
 "frames": [{
@@ -378,13 +653,13 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_taegk"]
-radius = 18.0
+radius = 20.0
 height = 44.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player", "jogador"]]
 texture_filter = 1
 position = Vector2(69, 81)
-collision_mask = 14
+collision_mask = 15
 script = SubResource("GDScript_taegk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Player"]]
@@ -397,13 +672,11 @@ z_index = 1
 position = Vector2(12, -10)
 scale = Vector2(0.878432, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
-animation = &"attack_model1"
+animation = &"death"
 autoplay = "idle"
-frame = 9
-frame_progress = 1.0
 
 [node name="Area2D_Ataque" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 16
 collision_mask = 2
 monitoring = false
 

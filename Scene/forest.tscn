@@ -1,18 +1,22 @@
-[gd_scene load_steps=18 format=4 uid="uid://3sw031be328q"]
+[gd_scene load_steps=29 format=4 uid="uid://3sw031be328q"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_b2hj7"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_o2q3j"]
 [ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="3_uehro"]
 [ext_resource type="Texture2D" uid="uid://dyorwe4xkcw1d" path="res://Sprites/eeeee.png" id="3_wxqtn"]
-[ext_resource type="Texture2D" uid="uid://dbmtlmw1lx5p5" path="res://Sprites/background_set/B1010.png" id="4_0ca2o"]
-[ext_resource type="Texture2D" uid="uid://b4lr4ykyyhakf" path="res://Sprites/background_set/C2011.png" id="5_0ca2o"]
 [ext_resource type="Texture2D" uid="uid://dsn0p3i34js61" path="res://Sprites/background_set/estrelas.png" id="5_2dvii"]
-[ext_resource type="Texture2D" uid="uid://d0acmmt5mj2al" path="res://Sprites/background_set/Montanha2.png" id="5_p1i8u"]
+[ext_resource type="Texture2D" uid="uid://d2ul6wjxlnss" path="res://Sprites/background_set/B1010 mais escuro.png" id="5_u6jjf"]
 [ext_resource type="Texture2D" uid="uid://b2rnl00affn0t" path="res://Sprites/background_set/chãozinho de fundo mato.png" id="7_2dvii"]
+[ext_resource type="Texture2D" uid="uid://wj61bnfofppe" path="res://Sprites/background_set/Montanha mais escuro.png" id="7_3tkwh"]
 [ext_resource type="Texture2D" uid="uid://ck4hmdw862eq3" path="res://Sprites/background_set/bgrd_tree2.png" id="8_0ca2o"]
+[ext_resource type="Texture2D" uid="uid://ch1yxg150eibt" path="res://Sprites/background_set/C2013 mais escura.png" id="8_a2akr"]
 [ext_resource type="Texture2D" uid="uid://civejimtrn47u" path="res://Sprites/background_set/céu.png" id="9_u6jjf"]
 [ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="11_2dvii"]
 [ext_resource type="PackedScene" uid="uid://ydch367el7kt" path="res://camera.tscn" id="13_u6jjf"]
+[ext_resource type="Script" uid="uid://c1cb66u77w2ao" path="res://Scene/health_bar.gd" id="14_3tkwh"]
+[ext_resource type="FontFile" uid="uid://bccmf7cjvtlsr" path="res://Fonts/Violance Thriller.ttf" id="15_a2akr"]
+[ext_resource type="Script" uid="uid://2h3sw2ahidyd" path="res://Scene/game_over_screen.gd" id="15_h6do7"]
+[ext_resource type="FontFile" uid="uid://dueij2t7ma1kn" path="res://Fonts/PERRYGOT.TTF" id="17_k54tc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlusy"]
 texture = ExtResource("2_o2q3j")
@@ -1119,19 +1123,89 @@ texture = ExtResource("3_wxqtn")
 
 [sub_resource type="TileSet" id="TileSet_bawo1"]
 physics_layer_0/collision_layer = 4
-physics_layer_0/collision_mask = 3
+physics_layer_0/collision_mask = 0
 sources/1 = SubResource("TileSetAtlasSource_jlusy")
 sources/2 = SubResource("TileSetAtlasSource_1wh8k")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u6jjf"]
 size = Vector2(41, 164.5)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tkwh"]
+bg_color = Color(0.13398606, 0.0023205376, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.2627451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2akr"]
+bg_color = Color(0.24315274, 0.010741, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_color = Color(0.17828661, 1.1882279e-07, 0.023226373, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6do7"]
+bg_color = Color(0.12156863, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.19489294, 1.17318706e-07, 1.8049032e-08, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_jnhfv"]
+font = ExtResource("15_a2akr")
+font_size = 72
+font_color = Color(0, 0, 0, 0.5764706)
+outline_size = 1
+outline_color = Color(0.12038336, 6.053946e-08, 1.8049032e-08, 1)
+shadow_color = Color(0.2086803, 1.5191269e-07, 2.4065375e-08, 1)
+
+[sub_resource type="Animation" id="Animation_h6do7"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.003921569)]
+}
+
+[sub_resource type="Animation" id="Animation_k54tc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_17gjw"]
+_data = {
+&"RESET": SubResource("Animation_k54tc"),
+&"fade_in": SubResource("Animation_h6do7")
+}
+
 [node name="Forest" type="Node2D"]
 position = Vector2(20, 15)
 metadata/_edit_vertical_guides_ = [1599.0, 1600.0]
 
 [node name="Player" parent="." instance=ExtResource("1_b2hj7")]
-position = Vector2(20, 118)
+position = Vector2(1068, 41)
 
 [node name="Enemy" parent="." instance=ExtResource("11_2dvii")]
 position = Vector2(1199, 139)
@@ -1150,7 +1224,7 @@ motion_scale = Vector2(0.1, 0.1)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/6"]
-texture = ExtResource("4_0ca2o")
+texture = ExtResource("5_u6jjf")
 centered = false
 
 [node name="7" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -1166,9 +1240,9 @@ motion_scale = Vector2(0.2, 0.2)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/5"]
-position = Vector2(7, 65)
-scale = Vector2(0.621094, 0.85585)
-texture = ExtResource("5_p1i8u")
+position = Vector2(7, 3)
+scale = Vector2(0.64453125, 1.5378789)
+texture = ExtResource("7_3tkwh")
 centered = false
 
 [node name="4" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -1176,9 +1250,9 @@ motion_scale = Vector2(0.3, 0.3)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/4"]
-position = Vector2(15, 10)
+position = Vector2(24, 18.999998)
 scale = Vector2(0.333984, 0.285156)
-texture = ExtResource("5_0ca2o")
+texture = ExtResource("8_a2akr")
 centered = false
 
 [node name="3" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -1186,7 +1260,8 @@ motion_scale = Vector2(0.4, 0.4)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/3"]
-position = Vector2(-4, 173)
+position = Vector2(-4, 161)
+scale = Vector2(1, 1.5)
 texture = ExtResource("7_2dvii")
 centered = false
 
@@ -1195,8 +1270,8 @@ motion_scale = Vector2(0.5, 0.5)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/2"]
-position = Vector2(49, 112)
-scale = Vector2(0.338235, 0.295139)
+position = Vector2(8, 89.00001)
+scale = Vector2(0.3786765, 0.37152776)
 texture = ExtResource("8_0ca2o")
 centered = false
 
@@ -1205,7 +1280,7 @@ motion_scale = Vector2(1.5, 1.5)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/1"]
-position = Vector2(-6, -56)
+position = Vector2(-4, -60)
 scale = Vector2(0.515, 0.508772)
 texture = ExtResource("9_u6jjf")
 centered = false
@@ -1221,5 +1296,100 @@ next_level = "castle"
 [node name="CollisionShape2D" parent="LevelEnd" index="0"]
 position = Vector2(-4, -68.75)
 shape = SubResource("RectangleShape2D_u6jjf")
+
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 1
+
+[node name="HUD" type="Control" parent="UI"]
+process_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="health_bar" type="ProgressBar" parent="UI/HUD"]
+layout_mode = 1
+offset_left = 3.0
+offset_top = 28.0
+offset_right = 103.0
+offset_bottom = 35.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3tkwh")
+theme_override_styles/fill = SubResource("StyleBoxFlat_a2akr")
+max_value = 5.0
+value = 5.0
+show_percentage = false
+script = ExtResource("14_3tkwh")
+
+[node name="GameOverLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 10
+
+[node name="GameOverScreen" type="Control" parent="GameOverLayer"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_h6do7")
+
+[node name="ColorRect" type="ColorRect" parent="GameOverLayer/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="QuitButton" type="Button" parent="GameOverLayer/GameOverScreen/ColorRect"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 130.0
+offset_right = 112.0
+offset_bottom = 180.0
+theme_override_colors/font_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
+theme_override_fonts/font = ExtResource("17_k54tc")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_h6do7")
+text = "Quit
+"
+
+[node name="RestartButton" type="Button" parent="GameOverLayer/GameOverScreen/ColorRect"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 131.0
+offset_right = 285.0
+offset_bottom = 181.0
+theme_override_colors/font_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
+theme_override_fonts/font = ExtResource("17_k54tc")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_h6do7")
+text = "Reiniciar"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverLayer/GameOverScreen/ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.247
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="GameOverLayer/GameOverScreen/ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_jnhfv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOverLayer/GameOverScreen"]
+libraries = {
+&"": SubResource("AnimationLibrary_17gjw")
+}
 
 [editable path="LevelEnd"]
