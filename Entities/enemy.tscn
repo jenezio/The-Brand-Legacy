@@ -463,7 +463,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cyfus"]
-size = Vector2(31, 43)
+size = Vector2(31, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dhb5u"]
 size = Vector2(40.8687, 53.58905)
@@ -489,7 +489,7 @@ sprite_frames = SubResource("SpriteFrames_cfdqp")
 animation = &"attack"
 
 [node name="colisor_padrao" type="CollisionShape2D" parent="." groups=["Enemy"]]
-position = Vector2(3.5, 2.5)
+position = Vector2(3.5, 1)
 shape = SubResource("RectangleShape2D_cyfus")
 debug_color = Color(0.994841, 0, 0.215467, 0.42)
 
@@ -520,6 +520,6 @@ position = Vector2(0, 1)
 target_position = Vector2(34, 0)
 collision_mask = 255
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
 [connection signal="body_entered" from="Area2D_DanoPlayer" to="." method="_on_area_2d_dano_player_body_entered"]
 [connection signal="body_entered" from="Area2D_Visao" to="." method="_on_area_2d_visao_body_entered"]
