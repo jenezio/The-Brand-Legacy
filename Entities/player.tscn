@@ -381,7 +381,7 @@ animations = [{
 radius = 18.0
 height = 44.0
 
-[node name="Player" type="CharacterBody2D" groups=["Player"]]
+[node name="Player" type="CharacterBody2D" groups=["Player", "jogador"]]
 texture_filter = 1
 position = Vector2(69, 81)
 collision_mask = 14
@@ -393,6 +393,7 @@ shape = SubResource("CapsuleShape2D_ypkcv")
 debug_color = Color(0.999569, 0, 0.108775, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
+z_index = 1
 position = Vector2(12, -10)
 scale = Vector2(0.878432, 0.9375)
 sprite_frames = SubResource("SpriteFrames_s1j76")
@@ -400,13 +401,6 @@ animation = &"attack_model1"
 autoplay = "idle"
 frame = 9
 frame_progress = 1.0
-
-[node name="Camera2D" type="Camera2D" parent="." groups=["Player"]]
-limit_left = 0
-limit_top = 0
-limit_right = 1600
-limit_bottom = 213
-position_smoothing_enabled = true
 
 [node name="Area2D_Ataque" type="Area2D" parent="."]
 collision_layer = 4
