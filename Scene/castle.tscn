@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=4 uid="uid://cdgof6ajxlmxf"]
+[gd_scene load_steps=12 format=4 uid="uid://cdgof6ajxlmxf"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_hva3m"]
 [ext_resource type="Texture2D" uid="uid://bgmr6c4o6tr65" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_1.png" id="2_hva3m"]
 [ext_resource type="Texture2D" uid="uid://bprluxm2tvtix" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_3.png" id="3_03aui"]
 [ext_resource type="Texture2D" uid="uid://dn0x1neeihvqr" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_2.png" id="3_7wows"]
 [ext_resource type="Texture2D" uid="uid://cqpax6jycs8to" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/floor_tile_4.png" id="4_xowb1"]
+[ext_resource type="PackedScene" uid="uid://due266gpvcejh" path="res://Entities/pausa_menu.tscn" id="6_xowb1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7wows"]
 texture = ExtResource("2_hva3m")
@@ -73,3 +74,5 @@ tile_set = SubResource("TileSet_m60jb")
 collision_visibility_mode = 1
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="PausaMenu" parent="." instance=ExtResource("6_xowb1")]
