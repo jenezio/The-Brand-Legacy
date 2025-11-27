@@ -477,14 +477,14 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cyfus"]
-size = Vector2(35, 46)
+size = Vector2(35, 43)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dhb5u"]
 size = Vector2(35.16609, 53.58905)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cyfus"]
-radius = 100.0
-height = 200.0
+radius = 34.131584
+height = 136.06096
 
 [node name="Enemy" type="CharacterBody2D" groups=["Enemy"]]
 z_index = 1
@@ -501,7 +501,7 @@ frame = 11
 frame_progress = 0.45538002
 
 [node name="colisor_padrao" type="CollisionShape2D" parent="." groups=["Enemy"]]
-position = Vector2(1.5, 4)
+position = Vector2(1.5, 2.5)
 shape = SubResource("RectangleShape2D_cyfus")
 debug_color = Color(0.994841, 0, 0.215467, 0.42)
 
@@ -519,14 +519,15 @@ position = Vector2(-1, 0)
 collision_layer = 64
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Visao" groups=["Enemy"]]
-position = Vector2(-1, 1)
-scale = Vector2(1.03814, 1.51041)
+position = Vector2(-1.125, 1.095)
+rotation = -1.5761889
+scale = Vector2(0.911, 1.325)
 shape = SubResource("CapsuleShape2D_cyfus")
 debug_color = Color(0.14143, 0.519588, 1, 0.42)
 
 [node name="WallCheck" type="RayCast2D" parent="."]
 position = Vector2(0, 1)
-target_position = Vector2(19, 0)
+target_position = Vector2(34, 0)
 collision_mask = 255
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
