@@ -1,7 +1,7 @@
-[gd_scene load_steps=50 format=4 uid="uid://cdgof6ajxlmxf"]
+[gd_scene load_steps=52 format=4 uid="uid://cdgof6ajxlmxf"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_hva3m"]
-[ext_resource type="PackedScene" uid="uid://dptgu85cgwv73" path="res://Entities/level_end.tscn" id="2_5r8ci"]
+[ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="2_5r8ci"]
 [ext_resource type="Texture2D" uid="uid://6ia64wa8wefu" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/spikes.png" id="2_13pt3"]
 [ext_resource type="Texture2D" uid="uid://cguljs34uqqvq" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1.png" id="2_87gna"]
 [ext_resource type="Texture2D" uid="uid://yie2fq4meixb" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1_mesclado.png" id="3_13pt3"]
@@ -19,9 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://0qwbpso0meth" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/walls.png" id="14_4ynsg"]
 [ext_resource type="Texture2D" uid="uid://3khngdca5lab" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/windows.png" id="15_uuii1"]
 [ext_resource type="Texture2D" uid="uid://kymsyen7njns" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/blank.png" id="17_hmq6l"]
-[ext_resource type="PackedScene" path="res://camera.tscn" id="18_bpfbj"]
+[ext_resource type="PackedScene" uid="uid://ydch367el7kt" path="res://camera.tscn" id="18_bpfbj"]
 [ext_resource type="PackedScene" uid="uid://cokhp4qpk5syb" path="res://Scene/ui.tscn" id="21_sxfn6"]
 [ext_resource type="PackedScene" uid="uid://coktgah7pakn6" path="res://Scene/game_over_layer.tscn" id="22_uvott"]
+[ext_resource type="PackedScene" uid="uid://dh7vk85luh0bk" path="res://Entities/mago.tscn" id="23_uvott"]
+[ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="24_pjhtd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_godvo"]
 size = Vector2(33, 213)
@@ -1651,5 +1653,17 @@ limit_bottom = 345
 [node name="UI" parent="." instance=ExtResource("21_sxfn6")]
 
 [node name="GameOverLayer" parent="." instance=ExtResource("22_uvott")]
+
+[node name="Enemy" parent="." instance=ExtResource("23_uvott")]
+z_index = 3
+position = Vector2(1700, 263)
+
+[node name="Enemy2" parent="." instance=ExtResource("24_pjhtd")]
+z_index = 3
+position = Vector2(316, 216)
+
+[node name="Enemy3" parent="." instance=ExtResource("24_pjhtd")]
+z_index = 3
+position = Vector2(575, 172)
 
 [editable path="LevelEnd"]
