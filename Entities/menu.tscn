@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhv5k13c1hf03"]
+
+[ext_resource type="Texture2D" uid="uid://b4h63tl5w06fa" path="res://Imagens das Telas de Menu, pausa, morte e etc/BackgroundMenu.png" id="1_ipycu"]
+[ext_resource type="Script" uid="uid://c1qowq15ot651" path="res://Scripts/menu.gd" id="1_w4410"]
+[ext_resource type="FontFile" uid="uid://b2rh0oops8jvr" path="res://Imagens das Telas de Menu, pausa, morte e etc/Gotfridus.otf" id="2_40gkq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w4410"]
+font = ExtResource("2_40gkq")
+font_size = 22
+font_color = Color(0.69965345, 0.69965345, 0.69965345, 1)
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchor_right = 6.1980004
+anchor_bottom = 5.8890004
+offset_right = -49.02417
+offset_bottom = 0.087890625
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w4410")
+
+[node name="Fundo" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.16600001
+anchor_bottom = 0.162
+offset_left = 0.99999994
+offset_top = 1.9999999
+offset_right = 2602.8237
+offset_bottom = 1873.5498
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_ipycu")
+
+[node name="Titulo" type="Label" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 12.0
+offset_right = 250.0
+offset_bottom = 52.0
+scale = Vector2(1.125, 1.125)
+text = "The Brand Legacy"
+label_settings = SubResource("LabelSettings_w4410")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 130.0
+offset_right = 285.0
+offset_bottom = 194.0
+
+[node name="start" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_focus_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_pressed_color = Color(0.5372549, 0.5372549, 0.5372549, 1)
+theme_override_colors/font_hover_color = Color(0.95596343, 0.9559633, 0.95596343, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_40gkq")
+theme_override_font_sizes/font_size = 17
+text = "Iniciar Jogo"
+
+[node name="exit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_focus_color = Color(0.69803923, 0.69803923, 0.69803923, 1)
+theme_override_colors/font_pressed_color = Color(0.5370113, 0.5370113, 0.5370112, 1)
+theme_override_colors/font_hover_color = Color(0.95686275, 0.95686275, 0.95686275, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("2_40gkq")
+theme_override_font_sizes/font_size = 13
+text = "Sair do Jogo"
+
+[connection signal="pressed" from="VBoxContainer/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/exit" to="." method="_on_exit_pressed"]
