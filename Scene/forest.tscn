@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://3sw031be328q"]
+[gd_scene load_steps=20 format=4 uid="uid://3sw031be328q"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_b2hj7"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_o2q3j"]
@@ -11,6 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://ck4hmdw862eq3" path="res://Sprites/background_set/bgrd_tree2.png" id="8_0ca2o"]
 [ext_resource type="Texture2D" uid="uid://ch1yxg150eibt" path="res://Sprites/background_set/C2013 mais escura.png" id="8_3tkwh"]
 [ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="11_2dvii"]
+[ext_resource type="PackedScene" uid="uid://mvcb2ybjytx5" path="res://health_bar.tscn" id="12_uehro"]
+[ext_resource type="Script" uid="uid://bh44iirxhg0l2" path="res://health_bar.gd" id="13_u6jjf"]
+[ext_resource type="Script" uid="uid://2h3sw2ahidyd" path="res://Scene/game_over_screen.gd" id="14_a2akr"]
+[ext_resource type="FontFile" uid="uid://c17gdgvb01jp3" path="res://Fonts/Violance Thriller.otf" id="15_a2akr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlusy"]
 texture = ExtResource("2_o2q3j")
@@ -1138,18 +1142,26 @@ texture = ExtResource("3_wxqtn")
 0:10/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_bawo1"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 4
+physics_layer_0/collision_mask = 0
 navigation_layer_0/layers = 1
 sources/1 = SubResource("TileSetAtlasSource_jlusy")
 sources/2 = SubResource("TileSetAtlasSource_1wh8k")
+
+[sub_resource type="LabelSettings" id="LabelSettings_a2akr"]
+font = ExtResource("15_a2akr")
+font_size = 56
+font_color = Color(0.11119685, 0.11119684, 0.11119684, 0.36862746)
+shadow_size = 5
+shadow_color = Color(0.19607843, 0, 0, 1)
 
 [node name="Forest" type="Node2D"]
 position = Vector2(20, 15)
 
 [node name="Player" parent="." instance=ExtResource("1_b2hj7")]
-position = Vector2(968, 71)
+position = Vector2(605, 50)
 
-[node name="Esqueletinho" parent="." instance=ExtResource("11_2dvii")]
+[node name="Esqueletinho" parent="." groups=["Player"] instance=ExtResource("11_2dvii")]
 position = Vector2(1199, 139)
 
 [node name="Goblin" parent="." instance=ExtResource("3_2dvii")]
@@ -1222,3 +1234,50 @@ centered = false
 [node name="1" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_scale = Vector2(1.5, 1.5)
 motion_mirroring = Vector2(288, 0)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="health_bar" parent="UI/HUD" instance=ExtResource("12_uehro")]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 106.0
+offset_bottom = 7.0
+script = ExtResource("13_u6jjf")
+
+[node name="GameOverScreen" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_a2akr")
+
+[node name="ColorRect" type="ColorRect" parent="UI/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.53333336)
+
+[node name="Label" type="Label" parent="UI/GameOverScreen/ColorRect" groups=["Enemy", "Player"]]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 51.0
+offset_right = 226.0
+offset_bottom = 131.0
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_a2akr")
+horizontal_alignment = 1
+vertical_alignment = 1

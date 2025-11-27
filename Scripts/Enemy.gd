@@ -72,6 +72,17 @@ func _ready() -> void:
         if not anim.animation_finished.is_connected(_on_animation_finished):
             anim.animation_finished.connect(_on_animation_finished)
     
+        # ========== CONECTAR SINAL DA ÁREA DE DANO ==========
+    if damage_area:
+        if not damage_area.body_entered.is_connected(_on_area_2d_dano_player_body_entered):
+            damage_area.body_entered.connect(_on_area_2d_dano_player_body_entered)
+            print("✅ Sinal body_entered conectado via código!")
+        else:
+            print("⚠️ Sinal body_entered JÁ estava conectado")
+    else:
+        print("❌ ERRO: Area2D_DanoPlayer não encontrada!")
+    # ====================================================
+    
     # Buscar player
     call_deferred("_find_player")
     
@@ -148,7 +159,6 @@ func _state_patrol() -> void:
     var distance_from_start = abs(global_position.x - patrol_start_x)
     if distance_from_start >= patrol_distance:
         direction *= -1  # Inverte direção
-        print("🔄 Inimigo inverteu direção na patrulha")
     
     # Verifica parede
     if wall_check:

@@ -148,7 +148,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -232,40 +232,48 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4s6dc"]
-size = Vector2(20, 29)
+size = Vector2(31, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dhb5u"]
-size = Vector2(70, 80)
+size = Vector2(17.107826, 21.540695)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_dhb5u"]
 radius = 150.0
 
 [node name="Goblin" type="CharacterBody2D" groups=["Enemy"]]
+position = Vector2(2, -3)
 collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_4s6dc")
 vision_distance = 150.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
-scale = Vector2(0.7172899, 0.6963181)
+position = Vector2(-1, -5)
+scale = Vector2(0.87864494, 0.85295546)
 sprite_frames = SubResource("SpriteFrames_cfdqp")
-animation = &"idle"
+animation = &"attack"
 
 [node name="colisor_padrao" type="CollisionShape2D" parent="." groups=["Enemy"]]
-position = Vector2(-2, 4.5)
+position = Vector2(-0.5, 2.5)
 shape = SubResource("RectangleShape2D_4s6dc")
 debug_color = Color(0.994841, 0, 0.215467, 0.42)
 
 [node name="Area2D_DanoPlayer" type="Area2D" parent="." groups=["Enemy"]]
-position = Vector2(35, 0)
+position = Vector2(40, 0)
+scale = Vector2(2, 2)
+collision_layer = 16
 
 [node name="area_de_dano" type="CollisionShape2D" parent="Area2D_DanoPlayer" groups=["Enemy"]]
-position = Vector2(-1.9999995, 1.9999996)
+position = Vector2(-20.5, -0.75000024)
 scale = Vector2(1.05215, 0.951687)
 shape = SubResource("RectangleShape2D_dhb5u")
 debug_color = Color(0.0901961, 0.639216, 0, 0.2)
 
 [node name="Area2D_Visao" type="Area2D" parent="." groups=["Enemy"]]
+visible = false
 position = Vector2(-1, 0)
+collision_layer = 32
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Visao" groups=["Enemy"]]
 position = Vector2(-1, 1)
@@ -280,5 +288,6 @@ collision_mask = 255
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Area2D_DanoPlayer" to="." method="_on_area_2d_dano_player_body_entered"]
+[connection signal="body_shape_entered" from="Area2D_DanoPlayer" to="." method="_on_area_2d_dano_player_body_shape_entered"]
 [connection signal="body_entered" from="Area2D_Visao" to="." method="_on_area_2d_visao_body_entered"]
 [connection signal="body_exited" from="Area2D_Visao" to="." method="_on_area_2d_visao_body_exited"]
