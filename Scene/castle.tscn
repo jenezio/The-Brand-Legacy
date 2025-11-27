@@ -1608,7 +1608,7 @@ scale = Vector2(1.02167, 1.14879)
 
 [node name="LevelEnd" parent="." instance=ExtResource("2_5r8ci")]
 position = Vector2(1856, 166)
-next_level = "forest"
+next_level = "Tutorial"
 
 [node name="CollisionShape2D" parent="LevelEnd" index="0"]
 z_index = 3
