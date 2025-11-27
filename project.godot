@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="TheBrandLegacy"
-run/main_scene="uid://3sw031be328q"
+run/main_scene="uid://dgv0altkxl2ou"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
