@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1jet3fdquh4i"]
+
+[ext_resource type="Texture2D" uid="uid://d30pwk2tc75fv" path="res://Sprites/NPC.png" id="1_i06yp"]
+[ext_resource type="Texture2D" uid="uid://bk6cwvrok1qah" path="res://Sprites/ExclamaçaoPixel.png" id="1_u78sa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u78sa"]
+size = Vector2(233, 85)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2wuo"]
+size = Vector2(53.210617, 85.70314)
+
+[node name="NPC" type="Area2D"]
+
+[node name="AreaDeProximidade" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaDeProximidade"]
+light_mask = 512
+visibility_layer = 0
+position = Vector2(1, -7)
+shape = SubResource("RectangleShape2D_u78sa")
+
+[node name="Exclamação" type="Sprite2D" parent="."]
+position = Vector2(1, -44)
+scale = Vector2(0.2411111, 0.17805555)
+texture = ExtResource("1_u78sa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -8.000004)
+scale = Vector2(0.15434085, 0.16076924)
+texture = ExtResource("1_i06yp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D"]
+position = Vector2(2.5295715, 6.220093)
+scale = Vector2(2.8272722, 3.1100485)
+shape = SubResource("RectangleShape2D_m2wuo")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://3sw031be328q"]
+[gd_scene load_steps=27 format=4 uid="uid://3sw031be328q"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_b2hj7"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_o2q3j"]
@@ -17,6 +17,7 @@
 [ext_resource type="FontFile" uid="uid://bccmf7cjvtlsr" path="res://Fonts/Violance Thriller.ttf" id="15_a2akr"]
 [ext_resource type="Script" uid="uid://2h3sw2ahidyd" path="res://Scene/game_over_screen.gd" id="15_h6do7"]
 [ext_resource type="FontFile" uid="uid://dueij2t7ma1kn" path="res://Fonts/PERRYGOT.TTF" id="17_k54tc"]
+[ext_resource type="PackedScene" uid="uid://b35uc3aetggfj" path="res://Entities/npc.tscn" id="18_k54tc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlusy"]
 texture = ExtResource("2_o2q3j")
@@ -1252,7 +1253,7 @@ motion_scale = Vector2(1.5, 1.5)
 motion_mirroring = Vector2(288, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/1"]
-position = Vector2(-4, -60)
+position = Vector2(-6, -72)
 scale = Vector2(0.515, 0.508772)
 texture = ExtResource("9_u6jjf")
 centered = false
@@ -1363,5 +1364,8 @@ text = "GAME OVER"
 label_settings = SubResource("LabelSettings_jnhfv")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="NPC" parent="." instance=ExtResource("18_k54tc")]
+position = Vector2(261, 135)
 
 [editable path="LevelEnd"]

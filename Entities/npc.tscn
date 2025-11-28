@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://b35uc3aetggfj"]
+
+[ext_resource type="Texture2D" uid="uid://d30pwk2tc75fv" path="res://Sprites/NPC.png" id="1_i06yp"]
+[ext_resource type="Script" uid="uid://ctxtonfcorc1a" path="res://Scripts/NPC.gd" id="1_m2wuo"]
+[ext_resource type="Texture2D" uid="uid://bk6cwvrok1qah" path="res://Sprites/ExclamaçaoPixel.png" id="1_u78sa"]
+[ext_resource type="PackedScene" uid="uid://babhvaffd2fby" path="res://Scene/dialogo_npc.tscn" id="4_xgh6p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pflg1"]
+size = Vector2(233, 85)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2wuo"]
+size = Vector2(36, 78.5)
+
+[node name="NPC" type="CharacterBody2D"]
+z_index = -1
+position = Vector2(261, 142)
+script = ExtResource("1_m2wuo")
+
+[node name="ProximityArea" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProximityArea"]
+light_mask = 512
+visibility_layer = 0
+position = Vector2(6, 4)
+shape = SubResource("RectangleShape2D_pflg1")
+
+[node name="Exclamação" type="Sprite2D" parent="."]
+position = Vector2(3, -31.999998)
+scale = Vector2(0.2411111, 0.17805555)
+texture = ExtResource("1_u78sa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, 6.999996)
+scale = Vector2(0.15434085, 0.16076924)
+texture = ExtResource("1_i06yp")
+
+[node name="CliqueArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CliqueArea"]
+position = Vector2(4, -6.75)
+shape = SubResource("RectangleShape2D_m2wuo")
+
+[node name="DialogoNPC" parent="." instance=ExtResource("4_xgh6p")]
