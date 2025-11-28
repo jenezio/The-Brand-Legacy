@@ -21,6 +21,9 @@ enum State { PATROL, CHASE, ATTACK, HIT, DEAD }
 @export var attack_damage := 1
 @export var max_health := 5
 @export var attack_cooldown_time := 1.8
+@onready var wizard_die: AudioStreamPlayer = $wizard_die
+@onready var wizard_attack: AudioStreamPlayer = $wizard_attack
+@onready var wizard_hit: AudioStreamPlayer = $wizard_hit
 
 const GRAVITY := 980.0
 
@@ -222,6 +225,7 @@ func _state_attack() -> void:
 			damage_area.monitoring = true
 		
 		_play_animation("attack")
+		wizard_attack.play()
 		print("⚔️ Inimigo está atacando!")
 
 func _state_hit() -> void:
@@ -263,9 +267,11 @@ func take_damage(amount: int) -> void:
 		return
 	
 	health -= amount
+	wizard_hit.play()
 	print("💔 Inimigo levou ", amount, " de dano. Vida restante: ", health, "/", max_health)
 	
 	if health <= 0:
+		wizard_die.play()
 		print("💀 Inimigo morreu!")
 		is_dead = true
 		is_hitting = true

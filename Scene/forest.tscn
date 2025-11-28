@@ -1,10 +1,13 @@
-[gd_scene load_steps=21 format=4 uid="uid://3sw031be328q"]
+[gd_scene load_steps=25 format=4 uid="uid://3sw031be328q"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_b2hj7"]
 [ext_resource type="Texture2D" uid="uid://dugippwv8xteb" path="res://Sprites/oak_woods_tileset.png" id="2_o2q3j"]
-[ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="3_uehro"]
+[ext_resource type="AudioStream" uid="uid://dljy0b53ebcox" path="res://Sfx/hit_skeleton.mp3" id="3_ckxmv"]
+[ext_resource type="PackedScene" uid="uid://dptgu85cgwv73" path="res://Entities/level_end.tscn" id="3_uehro"]
 [ext_resource type="Texture2D" uid="uid://dyorwe4xkcw1d" path="res://Sprites/eeeee.png" id="3_wxqtn"]
+[ext_resource type="AudioStream" uid="uid://cgmxwdav70yga" path="res://Sfx/attack_skeleton.mp3" id="4_mvrgn"]
 [ext_resource type="Texture2D" uid="uid://dsn0p3i34js61" path="res://Sprites/background_set/estrelas.png" id="5_2dvii"]
+[ext_resource type="AudioStream" uid="uid://c4x0vqxaqdmc4" path="res://Sfx/skeleton_die.mp3" id="5_dxbav"]
 [ext_resource type="Texture2D" uid="uid://d2ul6wjxlnss" path="res://Sprites/background_set/B1010 mais escuro.png" id="5_u6jjf"]
 [ext_resource type="Texture2D" uid="uid://b2rnl00affn0t" path="res://Sprites/background_set/chãozinho de fundo mato.png" id="7_2dvii"]
 [ext_resource type="Texture2D" uid="uid://wj61bnfofppe" path="res://Sprites/background_set/Montanha mais escuro.png" id="7_3tkwh"]
@@ -16,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://cokhp4qpk5syb" path="res://Scene/ui.tscn" id="14_jnhfv"]
 [ext_resource type="PackedScene" uid="uid://coktgah7pakn6" path="res://Scene/game_over_layer.tscn" id="15_h6do7"]
 [ext_resource type="PackedScene" uid="uid://due266gpvcejh" path="res://Entities/pausa_menu.tscn" id="16_k54tc"]
+[ext_resource type="AudioStream" uid="uid://cnxoxqq82k8yn" path="res://Sfx/Background.mp3" id="17_h6do7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jlusy"]
 texture = ExtResource("2_o2q3j")
@@ -1151,6 +1155,17 @@ position = Vector2(18, 135)
 [node name="Enemy" parent="." instance=ExtResource("11_2dvii")]
 position = Vector2(1430, 130)
 
+[node name="hit_skeleton" type="AudioStreamPlayer" parent="Enemy"]
+stream = ExtResource("3_ckxmv")
+volume_db = -8.588
+
+[node name="attack_skeleton" type="AudioStreamPlayer" parent="Enemy"]
+stream = ExtResource("4_mvrgn")
+volume_db = -10.495
+
+[node name="die_skeleton" type="AudioStreamPlayer" parent="Enemy"]
+stream = ExtResource("5_dxbav")
+
 [node name="Terrain" type="TileMapLayer" parent="."]
 z_index = 1
 texture_filter = 1
@@ -1244,5 +1259,10 @@ shape = SubResource("RectangleShape2D_u6jjf")
 [node name="GameOverLayer" parent="." instance=ExtResource("15_h6do7")]
 
 [node name="PausaMenu" parent="." instance=ExtResource("16_k54tc")]
+
+[node name="bg" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_h6do7")
+volume_db = -4.771
+autoplay = true
 
 [editable path="LevelEnd"]

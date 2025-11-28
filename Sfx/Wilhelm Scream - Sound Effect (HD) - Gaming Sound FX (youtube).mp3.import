@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cq21d2y22r7og"
+path="res://.godot/imported/Wilhelm Scream - Sound Effect (HD) - Gaming Sound FX (youtube).mp3-d11c80738b506026c200446dd71688bf.mp3str"
+
+[deps]
+
+source_file="res://Sfx/Wilhelm Scream - Sound Effect (HD) - Gaming Sound FX (youtube).mp3"
+dest_files=["res://.godot/imported/Wilhelm Scream - Sound Effect (HD) - Gaming Sound FX (youtube).mp3-d11c80738b506026c200446dd71688bf.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

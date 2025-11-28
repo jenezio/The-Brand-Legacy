@@ -16,6 +16,9 @@ enum State { PATROL, CHASE, ATTACK, HIT, DEAD }
 @export_group("Detecção")
 @export var vision_distance := 250.0
 @export var attack_range := 55.0
+@onready var hit_skeleton: AudioStreamPlayer = $hit_skeleton
+@onready var attack_skeleton: AudioStreamPlayer = $attack_skeleton
+@onready var die_skeleton: AudioStreamPlayer = $die_skeleton
 
 @export_group("Combate")
 @export var attack_damage := 1
@@ -222,6 +225,7 @@ func _state_attack() -> void:
 			damage_area.monitoring = true
 		
 		_play_animation("attack")
+		attack_skeleton.play()
 		print("⚔️ Inimigo está atacando!")
 
 func _state_hit() -> void:
@@ -263,9 +267,11 @@ func take_damage(amount: int) -> void:
 		return
 	
 	health -= amount
+	hit_skeleton.play()
 	print("💔 Inimigo levou ", amount, " de dano. Vida restante: ", health, "/", max_health)
 	
 	if health <= 0:
+		die_skeleton.play()
 		print("💀 Inimigo morreu!")
 		is_dead = true
 		is_hitting = true

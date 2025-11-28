@@ -1,14 +1,14 @@
-[gd_scene load_steps=52 format=4 uid="uid://cdgof6ajxlmxf"]
+[gd_scene load_steps=59 format=4 uid="uid://cdgof6ajxlmxf"]
 
 [ext_resource type="PackedScene" uid="uid://ditjcd3xtjpu8" path="res://Entities/player.tscn" id="1_hva3m"]
-[ext_resource type="PackedScene" uid="uid://y4f185q7tr7b" path="res://Entities/level_end.tscn" id="2_5r8ci"]
+[ext_resource type="PackedScene" uid="uid://dptgu85cgwv73" path="res://Entities/level_end.tscn" id="2_5r8ci"]
 [ext_resource type="Texture2D" uid="uid://6ia64wa8wefu" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/spikes.png" id="2_13pt3"]
 [ext_resource type="Texture2D" uid="uid://cguljs34uqqvq" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1.png" id="2_87gna"]
 [ext_resource type="Texture2D" uid="uid://yie2fq4meixb" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/arch_1_mesclado.png" id="3_13pt3"]
 [ext_resource type="Texture2D" uid="uid://ccyxjwww5k0vb" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/brick_mesclado.png" id="4_hmq6l"]
 [ext_resource type="Texture2D" uid="uid://brqf6ahblqy4h" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/brick_sides_mesclado.png" id="5_bpfbj"]
 [ext_resource type="Texture2D" uid="uid://v0udqoa2m7u4" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/ceilling.png" id="6_5r8ci"]
-[ext_resource type="PackedScene" path="res://Entities/pausa_menu.tscn" id="6_xowb1"]
+[ext_resource type="PackedScene" uid="uid://due266gpvcejh" path="res://Entities/pausa_menu.tscn" id="6_xowb1"]
 [ext_resource type="Texture2D" uid="uid://bjlkyacwaip6v" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/ceilling_corner_transparent.png" id="7_godvo"]
 [ext_resource type="Texture2D" uid="uid://ca8e7e8x0f4r7" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/column.png" id="8_dti6x"]
 [ext_resource type="Texture2D" uid="uid://byg13tqbop2o3" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/damaged_brick.png" id="9_sxfn6"]
@@ -20,10 +20,17 @@
 [ext_resource type="Texture2D" uid="uid://3khngdca5lab" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles Mesclados/windows.png" id="15_uuii1"]
 [ext_resource type="Texture2D" uid="uid://kymsyen7njns" path="res://Sprites/Medieval_Castle_Asset_Pack/Tiles/blank.png" id="17_hmq6l"]
 [ext_resource type="PackedScene" uid="uid://ydch367el7kt" path="res://camera.tscn" id="18_bpfbj"]
-[ext_resource type="PackedScene" path="res://Scene/ui.tscn" id="21_sxfn6"]
-[ext_resource type="PackedScene" path="res://Scene/game_over_layer.tscn" id="22_uvott"]
-[ext_resource type="PackedScene" path="res://Entities/mago.tscn" id="23_uvott"]
+[ext_resource type="PackedScene" uid="uid://cokhp4qpk5syb" path="res://Scene/ui.tscn" id="21_sxfn6"]
+[ext_resource type="PackedScene" uid="uid://coktgah7pakn6" path="res://Scene/game_over_layer.tscn" id="22_uvott"]
+[ext_resource type="PackedScene" uid="uid://dh7vk85luh0bk" path="res://Entities/mago.tscn" id="23_uvott"]
+[ext_resource type="AudioStream" uid="uid://cq21d2y22r7og" path="res://Sfx/Wilhelm Scream - Sound Effect (HD) - Gaming Sound FX (youtube).mp3" id="24_7ejph"]
 [ext_resource type="PackedScene" uid="uid://bjwmgqfnho6tn" path="res://Entities/enemy.tscn" id="24_pjhtd"]
+[ext_resource type="AudioStream" uid="uid://dljy0b53ebcox" path="res://Sfx/hit_skeleton.mp3" id="25_4ynsg"]
+[ext_resource type="AudioStream" uid="uid://cxwxsdr8svymn" path="res://Sfx/backgorund_castle.mp3" id="25_5otrk"]
+[ext_resource type="AudioStream" uid="uid://cqm46ukol1elj" path="res://Sfx/attack_wizard.mp3" id="25_kxaar"]
+[ext_resource type="AudioStream" uid="uid://cgmxwdav70yga" path="res://Sfx/attack_skeleton.mp3" id="26_5ifux"]
+[ext_resource type="AudioStream" uid="uid://28aarpkbwe23" path="res://Sfx/wizard_hit.mp3" id="26_kxaar"]
+[ext_resource type="AudioStream" uid="uid://c4x0vqxaqdmc4" path="res://Sfx/skeleton_die.mp3" id="26_uuii1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_godvo"]
 size = Vector2(33, 213)
@@ -1678,12 +1685,51 @@ z_index = 2
 position = Vector2(1700, 263)
 chase_speed = 65.0
 
+[node name="wizard_die" type="AudioStreamPlayer" parent="Enemy"]
+stream = ExtResource("24_7ejph")
+volume_db = -26.715
+
+[node name="wizard_attack" type="AudioStreamPlayer" parent="Enemy"]
+stream = ExtResource("25_kxaar")
+volume_db = -9.541
+
+[node name="wizard_hit" type="AudioStreamPlayer" parent="Enemy"]
+stream = ExtResource("26_kxaar")
+volume_db = -6.679
+
 [node name="Enemy2" parent="." instance=ExtResource("24_pjhtd")]
 z_index = 3
 position = Vector2(316, 216)
 
+[node name="hit_skeleton" type="AudioStreamPlayer" parent="Enemy2"]
+stream = ExtResource("25_4ynsg")
+volume_db = -8.588
+
+[node name="attack_skeleton" type="AudioStreamPlayer" parent="Enemy2"]
+stream = ExtResource("26_5ifux")
+volume_db = -10.495
+
+[node name="die_skeleton" type="AudioStreamPlayer" parent="Enemy2"]
+stream = ExtResource("26_uuii1")
+
 [node name="Enemy3" parent="." instance=ExtResource("24_pjhtd")]
 z_index = 3
 position = Vector2(575, 172)
+
+[node name="hit_skeleton" type="AudioStreamPlayer" parent="Enemy3"]
+stream = ExtResource("25_4ynsg")
+volume_db = -8.588
+
+[node name="attack_skeleton" type="AudioStreamPlayer" parent="Enemy3"]
+stream = ExtResource("26_5ifux")
+volume_db = -10.495
+
+[node name="die_skeleton" type="AudioStreamPlayer" parent="Enemy3"]
+stream = ExtResource("26_uuii1")
+
+[node name="bg" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_5otrk")
+volume_db = -15.266
+autoplay = true
 
 [editable path="LevelEnd"]
