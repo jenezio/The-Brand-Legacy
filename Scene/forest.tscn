@@ -1152,6 +1152,7 @@ position = Vector2(18, 135)
 position = Vector2(1430, 130)
 
 [node name="Terrain" type="TileMapLayer" parent="."]
+z_index = 1
 texture_filter = 1
 position = Vector2(11, -16)
 scale = Vector2(1.00141, 1.04037)
